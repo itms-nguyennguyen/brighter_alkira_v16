@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.product.form.drug.details</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="acs_hms.product_template_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <field name="batch_no" position="after">
+                <field name="medicine_area"/>
+                <field name="medicine_technique"/>
+                <field name="medicine_depth"/>
+                <field name="medicine_method"/>
+            </field>
+        </field>
+    </record>        
+    
+    <record model="ir.ui.view" id="product_product_stock_tree_inherit">
+        <field name="name">product.product.stock.tree.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@icon='fa-history']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@icon='fa-refresh']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@icon='fa-cubes']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@icon='fa-area-chart']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

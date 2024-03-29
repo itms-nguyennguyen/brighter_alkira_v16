@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-inherit="web.ImageField" t-inherit-mode="extension">
+    <xpath expr="//button[hasclass('o_select_file_button')]" position="after">
+        <button
+            class="o_edit_file_button btn btn-primary btn-pill btn-lg m-2 p-2"
+            data-tooltip="Image Editor"
+            aria-label="Edit"
+            t-on-click="onFileEdit">
+            Edit
+        </button>
+    </xpath>
+</t>
+
+</templates>

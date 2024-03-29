@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">view.hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='o_work_employee_main']//group[4]" position="after">
+                <separator string="Signature" class="acs_separator"/>
+                    <field name="signature" widget="signature" class="img_fluid_signature"/>
+            </xpath>
+            <xpath expr="//page[@name='personal_information']" position="inside">
+                <group string="Registration Insurance" name="registration_insurance" colspan="2">
+                    <group colspan="2">
+                        <field name="registration_insurance" widget="work_permit_upload"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

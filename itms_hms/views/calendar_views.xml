@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<odoo>
+
+     <record id="view_calendar_event_form_inherit" model="ir.ui.view">
+        <field name="name">calendar.event.form</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="replace">
+                <form string="Meetings" js_class="calendar_form">
+                    <sheet>
+                        <field name="res_model" invisible="1"/>
+                        <field name="res_id" invisible="1"/>
+                        <field name="attendee_status" invisible="1"/>
+                        <field name="active" invisible="1"/>
+                        <div class="d-flex align-items-baseline" invisible="1">
+                            <field name="partner_ids" widget="many2manyattendee"
+                                placeholder="Select attendees..."
+                                context="{'force_email':True}"
+                                domain="[('type','!=','private')]"
+                                class="oe_inline o_calendar_attendees"
+                            />
+                            <div name="send_buttons" class="sm-2">
+                                <button name="action_open_composer" help="Send Email to attendees" type="object" string=" EMAIL" icon="fa-envelope"/>
+                            </div>
+<!--                            <button name="action_join_video_call" class="btn-primary" help="Join Video Call" type="object" string="Join Video Call" attrs="{'invisible': [('videocall_location', '=', False)]}"/>-->
+                        </div>
+                         <group>
+                                <group>
+                                 <field name="name" invisible="1"/>
+                                 <field name="patient_id"/>
+                                 <field name="physician_id" invisible="1"/>
+                                 <field name="consultation_service" widget="many2one"/>
+                                 <field name="start_at" string="Date"/>
+                                 <field name="time_slot" invisible="1"/>
+                                 <field name="start" string="Start Date" invisible="1"/>
+                                 <field name="stop" string="End Date" invisible="1"/>
+                                 <field name="description" string="Remark"/>
+                                <field name="payment_state" invisible="1"/>
+                                <field name="state"/>
+                                </group>
+                                 <group>
+                                 
+                                </group>
+                            </group>
+                    </sheet>
+                </form>
+            </xpath>
+        </field>
+     </record>
+
+    <record id="itms_view_calendar_event_calendar" model="ir.ui.view">
+        <field name="name">calendar.event.calendar.itms.appointment</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
+         <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <xpath expr="//calendar" position="replace">
+                <calendar js_class="attendee_calendar" string="Calendar" date_start="start" date_stop="stop" color="state" date_delay="duration" all_day="allday" event_open_popup="true" quick_add="False" mode="week" event_limit="5">
+                    <field name="attendee_status" invisible="1"/>
+                    <field name="partner_ids" options="{'block': True, 'icon': 'fa fa-users'}" filters="1" widget="many2manyattendee" write_model="calendar.filters" write_field="partner_id" filter_field="partner_checked" avatar_field="avatar_128"/>
+                    <field name="videocall_location" widget="url" text="Join Video Call" options="{'icon': 'fa fa-lg fa-video-camera'}" attrs="{'invisible': [('videocall_location', '=', False)]}"/>
+                    <field name="is_highlighted" invisible="1"/>
+                    <field name="is_organizer_alone" invisible="1"/>
+                    <field name="display_description" invisible="1"/>
+                    <field name="location" attrs="{'invisible': [('location', '=', False)]}"/>
+                    <field name="description" attrs="{'invisible': [('display_description', '=', False)]}" string="Remark"/>
+                    <field name="privacy"/>
+                    <field name="alarm_ids" attrs="{'invisible': [('alarm_ids', '=', [])]}"/>
+                    <field name="categ_ids" attrs="{'invisible': [('categ_ids', '=', [])]}"/>
+                    <!-- For recurrence update Dialog -->
+                    <field name="recurrency" invisible="1"/>
+                    <field name="recurrence_update" invisible="1"/>
+                    <field name="partner_id" string="Clinician"/>
+                     <field name="name" invisible="1"/>
+                     <field name="patient_id"/>
+                     <field name="physician_id"/>
+                     <field name="consultation_service"/>
+                     <field name="start_at" string="Date"/>
+                     <field name="time_slot"/>
+                     <field name="description" string="Remark"/>
+                    <field name="payment_state" invisible="1"/>
+                    <field name="state" filters="1"/>
+                     <field name="start" invisible="1"/>
+                    <field name="stop" invisible="1"/>
+            </calendar>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

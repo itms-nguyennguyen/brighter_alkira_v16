@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hospital_hms_treatment_form" model="ir.ui.view">
+        <field name="name">Treatment.form</field>
+        <field name="model">hms.treatment</field>
+        <field name="arch" type="xml">
+            <form class='dialog_full_screen' delete="0" duplicate="0">
+                <header>
+                    <group invisible="context.get('hide_header')">
+                    </group>
+                    <button name="treatment_done" states="draft" type="object" string="Done" class="oe_highlight"/>
+                    <button name="action_print" states="done" type="object" string="Print" class="oe_highlight"/>
+                     <button name="create_order" string="Create Order" invisible="1" attrs="{'invisible': ['|',('order_id','!=', False),('state','!=','done')]}" type="object" class="oe_highlight"/>
+                     <button name="action_link_patient" states="done" type="object" string="Done" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="done"/>
+                </header>
+                <div class="alert alert-error text-center" role="alert" style="margin-bottom:0px; background-color:#f8b9b9;"  attrs="{'invisible': [('alert_count','=',0)]}">
+                    <field name="medical_alert_ids" nolabel="1" widget="many2many_tags"/>
+                </div>
+                <sheet>
+                    <field name="state" invisible="1"/>
+                    <div class="oe_button_box" name="button_box" invisible="1">
+                    </div>
+                    <field name="image_128" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}" invisible="1"/>
+                    <div class="oe_title" invisible="1">
+                        <h1><field name="name" default_focus="1" placeholder="Name" invisible="1"/></h1>
+                    </div>
+                    <notebook>
+                         <page string="Before Photos" name="info">
+                             <group>
+                                <group>
+                                    <field name="date" string="Date"/>
+                                    <field name="patient_id" options="{'no_open': True}"/>
+                                    <!-- <field name="subject" class="ml4" string="Title"/> -->
+                                    <field name="nurse_id" string="Clinician" options="{'no_open': True}"/>
+                                    <field name="appointment_id" groups="base.group_no_one" invisible="1"/>
+                                    <field name="appointment_prescription_line_id" invisible="1"/>
+                                    <field name="appointment_id" groups="base.group_no_one" options="{'no_open': True}"/>
+                                    <field name="appointment_prescription_line_id" invisible="1" groups="base.group_no_one"/>
+                                    <field name="diagnosis_id" invisible="1"/>
+                                    <field name="age" invisible="1"/>
+                                    <field name="registration_product_id" invisible="1" groups="acs_hms.group_treatment_invoicing"/>
+                                    <field name="invoice_id" invisible="1"/>
+                                    <field name="alert_count" invisible="1"/>
+                                    <field name="department_id" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field
+                                        name="prescription_ids"
+                                        domain="[('state', '=', 'prescription'),('patient_id', '=', patient_id)]"
+                                        widget="many2many_checkboxes" invisible="1"/>
+                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="department_id" groups="acs_hms.group_allow_multi_department" invisible="1"/>
+                                    <field name="department_type" invisible="1"/>
+                                    <field name="end_date" invisible="1"/>
+                                    <field name="attending_physician_ids" widget="many2many_tags" invisible="1"/>
+                                     <field name="order_id" options="{'no_open': True}" invisible="1"/>
+                                </group>
+                            </group>
+                              <div class="o_field_custom" id="photo_form">
+                                <div class="d-flex header_photo_form">
+                                    <div>
+                                        <field name="photo_before" string="Take Photo"/>
+                                    </div>
+                                </div>
+                                <div class="card-deck-wrapper border-top pt-2">
+                        <div class="card-deck">
+                            <div class="container">
+                                <!-- <field name="photo2" string="Upload File or Photo" widget="image"/> -->
+                                <field name="is_invisible_before" invisible="1"/>
+                                <div attrs="{'invisible': [('is_invisible_before','==',True)]}">
+                                    <p class="text-center">Select Photo to add details</p>
+                                    <field name="attachment_before_ids" force_save="1">
+            <kanban create="false" class="o_kanban_view">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click kanban-ext bg-white shadow-lg rounded-lg p-4 m-2">
+                            <div class="flex flex-col items-center justify-center">
+                                <field name="datas" widget="image" class="mb-2"/>
+                                <field name="name" class="text-sm font-medium text-gray-700"/>
+                                <field name="document_type" class="text-xs text-gray-500"/>
+                            </div>
+                            <button type="object" name="action_remove_record" class="mt-2 bg-red-500 text-white font-semibold py-1 px-3 rounded hover:bg-red-600">Remove</button>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+                                        <form delete="false">
+                                            <group>
+                                                <field name="instruction_type" invisible="1"/>
+                                                <field name="datas" widget="image" string="File" attrs="{'invisible': [('instruction_type','==','pdf')]}"/>
+                                                <field name="instruction_pdf" help="Upload your PDF file." widget="pdf_viewer" attrs="{'invisible': [('instruction_type','==','image')]}"/>
+                                                <field name="document_type"/>
+                                                <field name="name" string="Notes"/>
+                                            </group>
+                                        </form>
+                                    </field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                         </page>
+                        <page string="Medicines" name="general_info">
+                            <separator string="Available Prescriptions" class="acs_separator"/>
+<field name="available_prescription_ids" string="Available Prescriptions" mode="kanban">
+    <kanban>
+        <field name="id"/>
+        <field name="first_product_id"/>
+        <field name="name"/>
+        <field name="product_ids" widget="many2many_tags"/>
+        <field name="is_locked" invisible="1"/>
+        <field name="state" invisible="1"/>
+        <templates>
+            <t t-name="kanban-box">
+                <div class="oe_kanban_global_click o_kanban_card border border-gray-200 rounded-lg shadow-sm bg-gray-100">
+                    <div class="p-3">
+                        <div class="font-semibold text-gray-800">
+                            <field name="first_product_id"/>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <field name="name"/>
+                        </div>
+                    </div>
+                    <div class="flex justify-around items-center p-2 border-t border-gray-200">
+                        <button name="select_prescription" type="object" string="Select" class="text-sm text-blue-600 hover:text-blue-800 font-semibold" context="{'default_treatment_id': parent.id}"/>
+                        <button name="remove_prescription" type="object" string="Deselect" class="text-sm text-red-600 hover:text-red-800 font-semibold" context="{'default_treatment_id': parent.id}"/>
+                        <button name="button_open_edit" type="object" string="Edit" class="text-sm text-green-600 hover:text-green-800 font-semibold" groups="acs_hms.group_hms_doctor" attrs="{'invisible': ['|',('is_locked','=',True),('state','not in',('prescription','request'))]}" context="{'default_treatment_id': parent.id}"/>
+                        <button name="button_request_change" type="object" string="Request Change" class="text-sm text-yellow-600 hover:text-yellow-800 font-semibold" groups="acs_hms_base.group_hms_manager" attrs="{'invisible': ['|',('is_locked','=',True),('state','!=','prescription')]}" context="{'default_treatment_id': parent.id}"/>
+                    </div>
+                </div>
+            </t>
+        </templates>
+    </kanban>
+</field>
+
+
+                            <separator string="Medicine" class="acs_separator"/>
+                            <field name="prescription_line_ids" string="Medicine" readonly='1' invisible="1">
+                                <tree string="Medicine" create='false'>
+                                    <field name="product_id" string="Medicine Name"/>
+                                    <field name="quantity" string="Qty"/>
+                                    <field name="common_dosage_id"/>
+                                    <field name="short_comment"/>
+                                    <field name="prescription_id"/>
+                                </tree>
+                            </field>
+<field name="medicine_line_ids" string="Medicine">
+    <kanban class="o_kanban_view">
+        <field name="id"/>
+        <templates>
+            <t t-name="kanban-box">
+                <div class="oe_kanban_global_click o_kanban_card border border-gray-200 rounded-lg shadow-md bg-white">
+                    <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                        <span class="text-lg font-semibold text-gray-800">
+                            <field name="product_id" domain="[('hospital_product_type','=','medicament')]" />
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-sm text-gray-700">
+                            <span class="font-medium">Medicine Area:</span>
+                            <field name="medicine_area" class="ml-2"/>
+                        </div>
+                        <div class="text-sm text-gray-700">
+                            <span class="font-medium">Dosage:</span>
+                            <field name="amount" class="ml-2"/>
+                        </div>
+                        <div class="text-sm text-gray-700">
+                            <span class="font-medium">Batch Number:</span>
+                            <field name="acs_lot_id" class="ml-2"/>
+                        </div>
+                        <div class="text-sm text-gray-700">
+                            <span class="font-medium">Expiry:</span>
+                            <field name="expiration_date" class="ml-2"/>
+                        </div>                        
+                    </div>
+                </div>
+            </t>
+        </templates>
+    </kanban>
+</field>
+</page>
+
+<page string="Treatment Notes" name="treatment_info">
+    <div class="py-4 px-6 bg-white shadow-md rounded-lg">
+        <div class="flex flex-col md:flex-row gap-4">
+            <!-- Left column for selecting treatment notes -->
+            <div class="w-full md:w-1/4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="template_ids">
+                    Select Treatment Note
+                </label>
+                <field name="template_ids" widget="many2many_tags"  
+                       class="border border-gray-300 rounded-lg p-2 w-full h-auto"  
+                       options="{'color': 'blue', 'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"/>
+            </div>
+
+            <!-- Right column for treatment note input -->
+            <div class="w-full md:w-1/2">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="finding">
+                    Treatment Note
+                </label>
+                <field name="finding" nolabel="1" colspan="2"  
+                       class="border border-gray-300 rounded-lg p-2 w-full h-full"  
+                       placeholder="Enter treatment note..."  
+                       attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+            </div>
+        </div>
+    </div>
+</page>
+
+                        
+                        <page name="consumable_lines" string="Non Medical">
+                            <field name="consumable_line_ids" nolabel="1" colspan="2" context="{'default_patient_id': patient_id }">
+                                <tree string="Line" editable="bottom">
+                                    <field name="product_id" expand="1" required="1" domain="[('hospital_product_type','in',('supply','consultation','pharmacy'))]"/>
+                                    <field name="product_uom_id" required="1" groups="uom.group_uom"/>
+                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="qty" required="1"/>
+                                    <field name="tracking" invisible="1"/>
+                                    <field name="lot_id" string="Batch Number" context="{'acs_product_id': product_id}" options="{'no_create': True}" attrs="{'readonly': [('tracking','=','none')], 'required': [('tracking','!=','none')]}"/>
+                                    <field name="price_unit" readonly="1" force_save="1"/>
+                                    <field name="subtotal" readonly="1" sum="Total" optional="show"/>
+                                    <field name="date" required="1"/>
+                                    <field name="move_id" invisible="1"/>
+                                    <!-- <field name="physician_id" optional="show"/>
+                                    <field name="department_id" invisible="1"/>
+                                    <field name="patient_id" invisible="1"/> -->
+                                </tree>
+                            </field>
+                        </page>
+
+
+
+                        <page name="photos" string="After Photos">
+                            <div class="o_field_custom" id="photo_form">
+                                <div class="d-flex header_photo_form">
+                                    <div>
+                                        <field name="photo" string="Take Photo"/>
+                                    </div>
+                                </div>
+                                <div class="card-deck-wrapper border-top pt-2">
+                        <div class="card-deck">
+                            <div class="container">
+                                <!-- <field name="photo2" string="Upload File or Photo" widget="image"/> -->
+                                <field name="is_invisible" invisible="1"/>
+                                <div attrs="{'invisible': [('is_invisible','==',True)]}">
+                                    <p class="text-center">Click on Photo/Plan to add or update details</p>
+                                    <field name="attachment_ids" force_save="1">
+                                        <kanban class="o_kanban_mobile" create="false">
+                                            <field name="document_type"/>
+                                            <field name="name"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_global_click kanban-ext">
+                                                        <div style="width: 100%; text-align: center;">
+                                                            <div class="mb-1">
+                                                                <field name="name"/>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <field name="document_type"/>
+                                                            </div>
+                                                            <field name="instruction_type" invisible="1"/>
+                                                            <field name="datas" style="width:100%;" widget="image" string="File" attrs="{'invisible': [('instruction_type','==','pdf')]}"/>
+                                                            <field name="instruction_pdf" help="Upload your PDF file." widget="pdf_viewer" attrs="{'invisible': [('instruction_type','==','image')]}"/>
+                                                        </div>
+                                                        <div class="btn_remove_record">
+                                                            <button type="object" name="action_remove_record" class="btn btn-danger" string="Remove"/>
+                                                        </div>
+
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+
+                                        <form delete="false">
+                                            <group>
+                                                <field name="instruction_type" invisible="1"/>
+                                                <field name="datas" widget="image" string="File" attrs="{'invisible': [('instruction_type','==','pdf')]}"/>
+                                                <field name="instruction_pdf" help="Upload your PDF file." widget="pdf_viewer" attrs="{'invisible': [('instruction_type','==','image')]}"/>
+                                                <field name="document_type"/>
+                                                <field name="name" string="Notes"/>
+                                            </group>
+                                        </form>
+                                    </field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                        </page>
+
+                        <footer position="inside" invisible="not context.get('hide_header')">
+                            <button name="treatment_done" states="draft" type="object" string="Done" class="oe_highlight"/>
+                            <button name="treatment_draft" string="Edit" states="done" type="object" class="oe_highlight"/>
+                            <button name="action_unlink" string="Delete Treatment" states="draft" type="object"/>
+<!--                            <button name="create_order" string="Create Order" attrs="{'invisible': ['|',('order_id','!=', False),('state','!=','done')]}" type="object" class="oe_highlight"/>-->
+                        </footer>
+                    </notebook>
+                    <script type="text/javascript">
+                        setTimeout(() => {
+                        var lines = document.querySelectorAll('.show-red div input');
+                        var forecast = document.querySelectorAll('.forecast-medicine');
+                        for (i=0; i &lt; lines.length; i++) {
+                            console.log('checked',lines[i].checked);
+                            if (lines[i].checked){
+                                forecast[i].style.color = 'red';
+                                console.log(i);
+                            } else {
+                                forecast[i].style.color = 'blue';
+                        console.log(i);
+                            }
+
+                        }
+                        }, 500);
+
+
+                    </script>
+
+                    <style type="text/css">
+
+<!--                        .show-red {-->
+<!--                            color: red;-->
+<!--                        }-->
+
+                    </style>
+                </sheet>
+<!--                <div class="o_attachment_preview"/>-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_hospital_hms_treatment_tree">
+        <field name="name">treatment.list</field>
+        <field name="model">hms.treatment</field>
+        <field name="arch" type="xml">
+            <tree string="Treatment Sheet">
+                <field name="name"/>
+                <!-- <field name="subject"/> -->
+                <field name="patient_id"/>
+                <field name="date"/>
+                <field name="activity_ids" widget="list_activity" optional="hide"/>
+                <field name="state" decoration-info="state=='draft'" decoration-danger="state=='cancel'" decoration-success="state=='done'" decoration-warning="state=='running'" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hms_treatment_search" model="ir.ui.view">
+        <field name="name">Treatment Search</field>
+        <field name="model">hms.treatment</field>
+        <field name="arch" type="xml">
+            <search string="Search Treatments">
+                <field name="name" filter_domain="['|',('name', 'ilike', self), ('patient_id', 'ilike', self)]"/>
+                <!-- <field name="subject"/> -->
+                <field name="patient_id"/>
+                <field name="physician_id"/>
+                <field name="department_id" groups="acs_hms.group_allow_multi_department"/>
+                <filter name="my_treatment" string="My Treatments" domain="[('physician_id.user_id', '=',uid)]"/>
+                <separator/>
+                <filter name="done" string="Not Done" domain="[('state','!=','done'),('state','!=','cancel')]"/>
+                <group expand="0" string="Group By...">
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_acs_treatment_calendar" model="ir.ui.view">
+        <field name="name">hms.treatment.calendar</field>
+        <field name="model">hms.treatment</field>
+        <field name="type">calendar</field>
+        <field name="arch" type="xml">
+            <calendar string="Treatments" color="patient_id" date_start="date">
+                <field name="physician_id"/>
+                <field name="patient_id"/>
+                <field name="state"/>
+                <!-- <field name="subject"/> -->
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_treatment_pivot" model="ir.ui.view">
+        <field name="name">hms.treatment.pivot</field>
+        <field name="model">hms.treatment</field>
+        <field name="arch" type="xml">
+            <pivot string="Treatments">
+                <field name="date" type="row"/>
+                <field name="department_id" type="row"/>
+                <field name="physician_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="acs_action_form_hospital_treatment">
+        <field name="name">Treatment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hms.treatment</field>
+        <field name="view_mode">tree,form,calendar,pivot</field>
+        <field name="view_id" ref="view_hospital_hms_treatment_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add a Treatment.
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_acs_hms_treatment_appointment_tree">
+        <field name="name">treatment.list</field>
+        <field name="model">hms.treatment</field>
+        <field name="arch" type="xml">
+            <tree string="Treatments">
+                <field name="name"/>
+                <!-- <field name="subject"/> -->
+                <field name="patient_id"/>
+                <field name="date"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+                <field name="state" decoration-info="state=='draft'" decoration-danger="state=='cancel'" decoration-success="state=='done'" decoration-warning="state=='running'" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <button name="acs_select_treatement_for_appointment" type="object" string="Select"  icon="fa-plus" class="oe_highlight"/>
+            </tree>
+        </field>
+    </record>
+     <record id="view_treatment_template_tree" model="ir.ui.view">
+        <field name="name">treatment.template.tree</field>
+        <field name="model">treatment.template</field>
+        <field name="arch" type="xml">
+            <tree string="Treatment Template">
+                <field name="name"/>
+                <field name="notes"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_treatment_template_form" model="ir.ui.view">
+        <field name="name">treatment.template.form</field>
+        <field name="model">treatment.template</field>
+        <field name="arch" type="xml">
+            <form string="Treatment Template">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Title..."/>
+                        </h1>
+                    </div>
+
+                    <notebook>
+                        <page string="treatment" name="template">
+                            <field name="notes" placeholder="e.g...."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_treatment_template_view">
+        <field name="name">treatment Template</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">treatment.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add treatment.
+            </p>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_treatment_form">
+        <field name="name">Treatments Form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hms.treatment</field>
+        <field name="view_mode">form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add treatment.
+            </p>
+        </field>
+    </record>
+</odoo>

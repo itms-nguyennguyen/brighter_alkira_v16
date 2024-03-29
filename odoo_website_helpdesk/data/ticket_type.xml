@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ticket_categories_1" model="helpdesk.categories">
+        <field name="name">Adverse Event</field>
+    </record>
+    <record id="ticket_categories_2" model="helpdesk.categories">
+        <field name="name">General Support</field>
+    </record>
+    <record id="ticket_categories_3" model="helpdesk.categories">
+        <field name="name">Platform Support</field>
+    </record>
+</odoo>

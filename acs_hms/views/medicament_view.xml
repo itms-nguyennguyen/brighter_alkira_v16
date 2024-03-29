@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_medicament_group_tree" model="ir.ui.view">
+        <field name="name">medicament.group.tree</field>
+        <field name="model">medicament.group</field>
+        <field name="arch" type="xml">
+            <tree string="Line">
+                <field name="name"/>
+<!--                <field name="physician_id"/>-->
+<!--                <field name="diseases_id"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_medicament_group_form" model="ir.ui.view">
+        <field name="name">medicament.group.form</field>
+        <field name="model">medicament.group</field>
+        <field name="arch" type="xml">
+            <form string="Prescription Template">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Prescription Template"/>
+                        </h1>
+                    </div>
+                    <group>
+<!--                        <group>-->
+<!--                            <field name="physician_id"/>-->
+<!--                            <field name="diseases_id"/>-->
+<!--                        </group>-->
+                        <group>
+                            <field name="limit"/>
+                        </group>
+                    </group>
+                    <field name="medicament_group_line_ids">
+                        <tree string="" editable="top">
+                            <field name="product_id" expand="1" optional="show"/>
+                             <field name="medicine_area_id" options="{'always_reload': True}" optional="show"/>
+                             <field name="medicine_technique_id" options="{'always_reload': True}" optional="show"/>
+                            <field name="medicine_depth_id" options="{'always_reload': True}" optional="show"/>
+                            <field name="medicine_method_id" options="{'always_reload': True}" optional="show"/>
+                            <field name="medicine_area" optional="show" invisible="1"/>
+                            <field name="medicine_technique" optional="show" invisible="1"/>
+                            <field name="medicine_depth" optional="show" invisible="1"/>
+                            <field name="medicine_method" optional="show" invisible="1"/>
+                            <field name="allow_substitution" optional="hide" invisible="1"/>
+                            <field name="common_dosage_id" optional="hide" invisible="1"/>
+                            <field name="dose" optional="show"/>
+                            <field name="dosage_uom_id" optional="show"/>
+                            <field name="repeat" optional="show"/>
+                            <field name="use" optional="show"/>
+                            <field name="route_id" optional="hide" invisible="1"/>
+                            <field name="product_uom_category_id" invisible="1"/>
+                            <field name="qty_per_day" optional="show"/>
+                            <field name="days" optional="hide" invisible="1"/>
+                            <field name="quantity" optional="hide" invisible="1"/>
+                            <field name="short_comment" optional="hide" invisible="1"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_medicament_group_view">
+        <field name="name">Prescription Template</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicament.group</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add Prescription Template.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_medicament_dosage_tree" model="ir.ui.view">
+        <field name="name">medicament.dosage.tree</field>
+        <field name="model">medicament.dosage</field>
+        <field name="arch" type="xml">
+            <tree string="ACS Medication Dosage">
+                <field name="abbreviation"/>
+                <field name="code"/>
+                <field name="qty_per_day"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_medicament_dosage_form" model="ir.ui.view">
+        <field name="name">medicament.dosage.form</field>
+        <field name="model">medicament.dosage</field>
+        <field name="arch" type="xml">
+            <form string="Medication Dosage">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Medication Dosage"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="abbreviation"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="qty_per_day"/>
+                            <field name="days"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_medicament_dosage_search" model="ir.ui.view">
+        <field name="name">medicament.dosage.search</field>
+        <field name="model">medicament.dosage</field>
+        <field name="arch" type="xml">
+            <search string="ACS Medication Dosage">
+                <field name="abbreviation"/>
+                <field name="code"/>
+                <field name="name"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter string="Abbreviation" name="abbreviation_groupby" domain="[]"
+                        context="{'group_by':'abbreviation'}"/>
+                    <filter string="Code" domain="[]" name="code_groupby" context="{'group_by':'code'}"/>
+                    <filter string="Frequency" name="name_groupby" domain="[]" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_medicament_dosage">
+        <field name="name">Medication Dosage</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicament.dosage</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add Medication Dosage.
+            </p>
+        </field>
+    </record>
+
+</odoo>

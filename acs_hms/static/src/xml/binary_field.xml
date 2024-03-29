@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="acs_hms.BinaryField" t-inherit="web.BinaryField"  t-inherit-mode="extension" owl="1">
+        <xpath expr="//label[hasclass('o_select_file_button')]" position="replace">
+            <label class="o_select_file_button btn btn-primary">
+                <FileUploader
+                    acceptedFileExtensions="props.acceptedFileExtensions"
+                    onUploaded.bind="update"
+                >
+                    <t t-set-slot="toggler">
+                        <i class="fa fa-camera"/> Upload File or Photo
+                    </t>
+                </FileUploader>
+            </label>
+        </xpath>
+    </t>
+</templates>

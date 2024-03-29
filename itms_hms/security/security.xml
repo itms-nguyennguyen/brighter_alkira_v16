@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	 <record model="ir.module.category" id="module_itms_category_calendar">
+        <field name="name">Calendar</field>
+        <field name="exclusive" eval="0"/>
+        <field name="sequence">102</field>
+     </record>
+
+    <record id="group_calendar_user" model="res.groups">
+        <field name="name">User: Own Calendar Only</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="itms_hms.module_itms_category_calendar"/>
+    </record>
+
+    <record id="group_calendar_admin" model="res.groups">
+        <field name="name">Administrator: All Calendar</field>
+        <field name="category_id" ref="itms_hms.module_itms_category_calendar"/>
+        <field name="implied_ids" eval="[(4, ref('group_calendar_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+     <data noupdate="0">
+          <record id="calendar_event_rule_employee" model="ir.rule">
+              <field ref="calendar.model_calendar_event" name="model_id"/>
+              <field name="name">All Calendar Event</field>
+              <field name="domain_force">[(1, '=', 1)]</field>
+              <field name="groups" eval="[(4, ref('group_calendar_admin'))]"/>
+        </record>
+
+         <record id="calendar_event_rule_private" model="ir.rule">
+            <field ref="calendar.model_calendar_event" name="model_id"/>
+            <field name="name">Own Calendar Only Rule</field>
+             <field name="domain_force">['|',('user_id', '=', user.id),'|', ('partner_ids', 'in', user.partner_id.id),('physician_id.user_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+             <field name="groups" eval="[(4, ref('group_calendar_user'))]"/>
+        </record>
+
+    </data>
+
+</odoo>

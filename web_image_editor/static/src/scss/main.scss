@@ -1,0 +1,25 @@
+.save_edit_image{
+    margin-right:5px;
+    text-transform: none;
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    min-width: 62px;
+    height: 32px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease-in-out 0s;
+    border-radius: 2px;
+    border: 0px rgb(0, 141, 153);
+}
+
+#filerobot-image-editor{
+    font-family: monospace !important;
+}
+

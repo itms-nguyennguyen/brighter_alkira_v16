@@ -1,0 +1,148 @@
+.top_navbar_section.mb-3.mb-md-5 {
+    background-color: #ff4f00;
+     margin: 0 !important;
+}
+
+.o_form_button_save_new {
+ display: none;
+}
+
+
+.al-btn-adjust span {
+    overflow-wrap: unset !important;
+    font-size: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+      .al-btn-adjust span {
+        overflow-wrap: unset !important;
+        font-size: 8px;
+        }
+}
+
+.cprint {
+    position: absolute;
+    text-align: right;
+    right: 0;
+    }
+.cbar {
+  margin-right:50px;
+}
+.o_kanban_dashboard.o_acs_hms_kanban {
+    .o_kanban_record {
+
+    }
+
+    &.o_kanban_ungrouped {
+        .o_kanban_record {
+            width: 99%;
+            height: auto;
+        }
+    }
+}
+
+.o_acs_dashboard_graph > canvas {
+  height: 200px;
+}
+.o_acs_dashboard_graph > canvas g.nv-x.nv-axis {
+  transform: translateY(175px);
+}
+
+#acs_hms_dashboard {
+  min-width: 99%;
+  text-align: center;
+}
+
+.acs_graph_linechart {
+    display: block;
+    height: 350px;
+}
+
+.acs_separator
+{
+    text-transform: none !important;
+}
+
+img.o_signature.img.img-fluid {
+    max-width: 45% !important;
+}
+
+.btn-green.btn-light {
+  border-bottom-color: #4dfe4a !important;
+  border-bottom-width: thick !important;
+}
+
+.acs_col
+{
+    width: 250px !important;
+}
+
+.acs_col2
+{
+    width: 600px !important;
+}
+.acs_col_before {
+   background: aliceblue;
+}
+.acs_col_after {
+   background: aliceblue;
+}
+
+// Photo form
+
+#photo_form {
+    .header_photo_form {
+        justify-content: space-between;
+    }
+}
+
+.style_button_image {
+    label {
+        color: unset;
+        background-color: unset;
+        border-color: unset;
+        border: unset;
+    }
+}
+
+.kanban-ext {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-content: space-between !important;
+}
+
+
+
+.btn_remove_record {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    button {
+        width: 60%;
+        margin: 0px auto;
+    }
+
+.o_dialog .modal-content.position-absolute {
+    left: 0;
+    right: 0;
+}
+
+.credit-card-position-absolute {
+    position: absolute;
+    right: 15px;
+}
+
+.o_list_view table thead {
+    display: none;
+}
+.o_list_view table td {
+    display: flex;
+    flex-direction: column;
+}
+.o_list_view table td::before {
+    content: attr(data-label); /* Assuming you set the data-label attribute */
+    font-weight: bold;
+    margin-bottom:  5px;
+}
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <record id="wz_before_picture" model="ir.ui.view">
+        <field name="name">hms.picture.before.wizard.form</field>
+        <field name="model">hms.picture.before.wizard</field>
+        <field name="arch" type="xml">
+        <form>
+            <group> 
+                <field name="attachment_ids" widget="many2many_binary" />
+            </group>
+            <footer>
+                <button name="do_new_treatment" type="object" string="Do Treatment" class="oe_highlight"/>
+                <button name="button_complete" type="object" string="Save" class="oe_highlight"/>
+                <button special="cancel" string="Cancel"/>
+            </footer>
+        </form>
+        </field>
+    </record> -->
+    
+    
+
+        <record id="action_take_picture_wizard" model="ir.actions.act_window">
+            <field name="name">Take Picture Before</field>
+            <field name="res_model">hms.picture.before.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+</odoo>
+
+

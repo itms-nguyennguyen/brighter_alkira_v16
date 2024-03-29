@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consent_consent,access_consent_consent,model_consent_consent,base.group_user,1,1,1,1
+access_treatment_procedure,access_treatment_procedure,model_treatment_procedure,base.group_user,1,1,1,1
+access_patient_aftercare,access_patient_aftercare,model_patient_aftercare,base.group_user,1,1,1,1

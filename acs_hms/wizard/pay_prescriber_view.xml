@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+       <record id="view_pay_prescriber_wiz" model="ir.ui.view">
+        <field name="name">prescription.popup.wiz</field>
+        <field name="model">pay.prescriber.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Pay and Send">
+                <group>
+                    <group>
+                        <field name="payment_type" invisible="1"/>
+                        <field name="available_payment_method_line_ids" invisible="1"/>
+                        <field name="payment_method_line_id" options="{'always_reload': True, 'no_create': True, 'no_edit': True,'no_open': True}"/>
+                        <field name="payment_icon_ids" widget="many2many_tags" />
+                        <field name="partner_id" invisible="1"/>
+                        <field name="suitable_payment_token_ids" options="{'always_reload': True}" invisible="1"  widget="many2many_tags"/>
+                        <label for="payment_token_id" string="Select Credit Card"/>
+                        <div>
+                            <field name="payment_token_id" class="oe_inline" options="{'always_reload': True, 'no_create': True, 'no_edit': True,'no_open': True}"/>
+                        </div>
+                    </group>
+                    <group>
+                        <field name="prescriber_fee" string="Amount"/>
+                        <field name="payment_transaction_id"/>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="pay_prescription" type="object" string="Pay Now" class="oe_highlight"/> 
+                    <!-- confirm="You are about to process a payment of $25 using your saved credit card.If you wish to proceed, please click 'Ok' below. If you have any concerns or would like to make changes, click 'Cancel' to review your payment details." -->
+                    <button string="Close" class="oe_link" special="cancel" />
+                    <button name="save_payment" type="object" string="Manage Credit Cards" class="oe_inline fa fa-arrow-right btn btn-primary credit-card-position-absolute"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pay_prescriber_wiz" model="ir.actions.act_window">
+        <field name="name">Pay and Send</field>
+        <field name="res_model">pay.prescriber.wiz</field>
+        <field name="view_id" ref="acs_hms.view_pay_prescriber_wiz"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="ITMS Settings"
+                string="ITMS Settings" data-key="itms_general" groups="base.group_user">
+                    <div class="row mt16 o_settings_container" name="itms_password_check_container">
+                        <h2>Password</h2>
+                        <field name="password" password="true"/>
+                        <div class="text-muted">
+                            Input ITMS Password to access ITMS Settings
+                        </div>
+                        <field name="is_password_correct" invisible="1"/>
+                    </div>
+                    <div name="password_check">
+                        <div class="row mt16 o_settings_container" name="itms_general_container">
+                            <h2>General Settings</h2>
+
+                            <div class="col-lg-6 col-12 o_setting_box" title="Multi Company">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_itms_multi_company" attrs="{'readonly': [('is_password_correct', '=', False)]}"/>
+                                    <field name="module_itms_base_multi_company" invisible="1"/>
+                                    <field name="module_itms_partner_multi_company" invisible="1"/>
+                                    <field name="module_itms_product_multi_company" invisible="1"/>
+                                </div>
+                                <div class="o_setting_right_pane" id="itms_multi_company">
+                                    <label for="use_itms_multi_company"/>
+                                    <div class="content-group">
+                                        <field name="is_default_contact_global" 
+                                            attrs="{'invisible': [('use_itms_multi_company', '=', False)],
+                                            'readonly': [('is_password_correct', '=', False)]}"/>
+                                        <label for="is_default_contact_global" 
+                                            attrs="{'invisible': [('use_itms_multi_company', '=', False)],
+                                            'readonly': [('is_password_correct', '=', False)]}"/>
+                                    </div>
+                                    <div class="content-group">
+                                        <field name="is_default_product_global" 
+                                            attrs="{'invisible': [('use_itms_multi_company', '=', False)],
+                                            'readonly': [('is_password_correct', '=', False)]}"/>
+                                        <label for="is_default_product_global" 
+                                            attrs="{'invisible': [('use_itms_multi_company', '=', False)],
+                                            'readonly': [('is_password_correct', '=', False)]}"/>
+                                    </div>
+                                    <!-- <div class="text-muted">
+                                        Enable List View Sticky Headers and Footers
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-12 o_setting_box" title="Sticky Header and Footer">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_itms_sticky_header" attrs="{'readonly': [('is_password_correct', '=', False)]}"/>
+                                    <field name="module_itms_list_view_sticky_header" invisible="1"/>
+                                </div>
+                                <div class="o_setting_right_pane" id="itms_sticky_header_setting">
+                                    <label for="use_itms_sticky_header"/>
+                                    <!-- <div class="text-muted">
+                                        Enable List View Sticky Headers and Footers
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-12 o_setting_box" title="Sticky Header">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_itms_m2x_option" attrs="{'readonly': [('is_password_correct', '=', False)]}"/>
+                                    <field name="module_web_m2x_options" invisible="1"/>
+                                </div>
+                                <div class="o_setting_right_pane" id="itms_m2x_options">
+                                    <label for="use_itms_m2x_option"/>
+                                    <!-- <div class="text-muted">
+                                        Enable ITMS M2x Options
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-12 o_setting_box" title="Pivot Sticky Header">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_itms_pivot_sticky" attrs="{'readonly': [('is_password_correct', '=', False)]}"/>
+                                    <field name="module_itms_pivot_view_sticky_header" invisible="1"/>
+                                </div>
+                                <div class="o_setting_right_pane" id="itms_sticky_header_setting">
+                                    <label for="use_itms_pivot_sticky"/>
+                                    <!-- <div class="text-muted">
+                                        Enable Pivot Sticky Headers
+                                    </div> -->
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6 col-12 o_setting_box" title="Show/Hide Send MEssage">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_itms_show_hide_send_message" attrs="{'readonly': [('is_password_correct', '=', False)]}"/>
+                                    <field name="module_itms_show_hide_send_message_button" invisible="1"/>
+                                </div>
+                                <div class="o_setting_right_pane" id="itms_show_hide_send_message">
+                                    <label for="use_itms_show_hide_send_message"/>
+                                    <!-- <div class="text-muted">
+                                        Enable Pivot Sticky Headers
+                                    </div> -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt16 o_settings_container" name="itms_colour_coding">
+                            <h2>Colour Coding Setting</h2>
+                            <div class="col-lg-6 col-12 o_setting_box" title="Colour Coding">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_itms_sale_color" attrs="{'readonly': [('is_password_correct', '=', False)]}"/>
+                                    <field name="module_itms_sale_stock_color" invisible="1"/>
+                                    <field name="module_itms_sale_mrp_color" invisible="1"/>
+                                    <field name="module_itms_sale_purchase_color" invisible="1"/>
+                                </div>
+                                <div class="o_setting_right_pane" id="itms_sale_colour_coding">
+                                    <label for="use_itms_sale_color"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12 o_setting_box" title="Colour Coding">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_itms_purchase_color" attrs="{'readonly': [('is_password_correct', '=', False)]}"/>
+                                    <field name="module_itms_purchase_stock_color" invisible="1"/>
+                                    <field name="module_itms_purchase_mrp_color" invisible="1"/>
+                                </div>
+                                <div class="o_setting_right_pane" id="itms_purchase_colour_coding">
+                                    <label for="use_itms_purchase_color"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12 o_setting_box" title="Colour Coding">
+                                <div class="o_setting_left_pane">
+                                    <field name="use_itms_mrp_color" attrs="{'readonly': [('is_password_correct', '=', False)]}"/>
+                                    <field name="module_itms_mrp_color" invisible="1"/>
+                                </div>
+                                <div class="o_setting_right_pane" id="itms_mrp_colour_coding">
+                                    <label for="use_itms_mrp_color"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

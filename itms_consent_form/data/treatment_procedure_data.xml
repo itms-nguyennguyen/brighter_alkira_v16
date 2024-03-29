@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+       <record id="biomodulator" model="treatment.procedure">
+            <field name="name">Biomodulator</field>
+            <field name="code">biomodulator</field>
+        </record>
+       <record id="fat_lip" model="treatment.procedure">
+            <field name="name">Fat Lipolysis</field>
+            <field name="code">fat_lip</field>
+        </record>
+       <record id="filler" model="treatment.procedure">
+            <field name="name">Dermal Fillers</field>
+            <field name="code">filler</field>
+        </record>
+       <record id="anti_wrinkle" model="treatment.procedure">
+            <field name="name">Anti Wrinkle</field>
+            <field name="code">anti_wrinkle</field>
+        </record>
+       <record id="thread_lift" model="treatment.procedure">
+            <field name="name">Thread Lift</field>
+            <field name="code">thread_lift</field>
+        </record>
+       <record id="lipodissolve" model="treatment.procedure">
+            <field name="name">Lipodissolve</field>
+            <field name="code">lipodissolve</field>
+        </record>
+       <record id="pdo" model="treatment.procedure">
+            <field name="name">PDO Collagen Treatment</field>
+            <field name="code">pdo</field>
+        </record>
+       <record id="hylase" model="treatment.procedure">
+            <field name="name">Hylase</field>
+            <field name="code">hylase</field>
+        </record>
+       <record id="topical_anaesthetic" model="treatment.procedure">
+            <field name="name">Topical Anaesthetic</field>
+            <field name="code">topical_anaesthetic</field>
+        </record>
+       <record id="radiesse" model="treatment.procedure">
+            <field name="name">Radiesse</field>
+            <field name="code">radiesse</field>
+        </record>
+       <record id="sculptra" model="treatment.procedure">
+            <field name="name">Sculptra</field>
+            <field name="code">sculptra</field>
+        </record>
+       <record id="ellanse" model="treatment.procedure">
+            <field name="name">Ellanse</field>
+            <field name="code">ellanse</field>
+        </record>
+       <record id="prp_prf" model="treatment.procedure">
+            <field name="name">PRP/PRF</field>
+            <field name="code">prp_prf</field>
+        </record>
+    </data>
+</odoo>

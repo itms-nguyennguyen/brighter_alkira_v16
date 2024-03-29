@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="hms_action_open_forum" model="ir.actions.act_url">
+            <field name="name">Forum</field>
+            <field name="target">self</field>
+            <field name="url" eval="'/forum'"/>
+    </record>
+</odoo>

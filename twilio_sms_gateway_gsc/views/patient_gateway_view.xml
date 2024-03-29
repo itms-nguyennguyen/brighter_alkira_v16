@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+ <record id="view_patient_form_send_sms" model="ir.ui.view">
+        <field name="name">patient.form</field>
+        <field name="model">hms.patient</field>
+        <field name="inherit_id" ref="acs_hms_base.view_patient_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button name="twilio_send_sms" string="Send SMS" type="object" class="oe_highlight" />
+            </xpath>
+         </field>
+    </record>
+
+
+
+ <record id="view_appointment_form_send_sms" model="ir.ui.view">
+        <field name="name">hms.appointment.form</field>
+        <field name="model">hms.appointment</field>
+        <field name="inherit_id" ref="acs_hms.view_hms_appointment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button name="twilio_send_sms" string="Send SMS" type="object" class="oe_highlight" />
+            </xpath>
+         </field>
+    </record>
+
+</odoo>

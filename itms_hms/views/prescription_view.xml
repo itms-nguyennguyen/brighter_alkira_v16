@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hms_prescription_order_form" model="ir.ui.view">
+        <field name="name">prescription.order.form</field>
+        <field name="model">prescription.order</field>
+        <field name="inherit_id" ref="acs_hms.view_hms_prescription_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='prescription_line_ids']//field[@name='product_id']" position="after">
+                <field name="medicine_area" optional="show" invisible="1"/>
+                <field name="medicine_technique" optional="show" invisible="1"/>
+                <field name="medicine_depth" optional="show" invisible="1"/>
+                <field name="medicine_method" optional="show" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

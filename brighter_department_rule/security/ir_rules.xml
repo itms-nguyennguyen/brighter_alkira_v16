@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="sale_order_department_rule" model="ir.rule">
+        <field name="name">Sales Order multi-department</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="domain_force">['|',('department_id', 'in', user.department_ids.ids),('department_id', '=', False)]</field>
+    </record>
+    <record id="purchase_order_department_rule" model="ir.rule">
+        <field name="name">Purchases Order multi-department</field>
+        <field name="model_id" ref="model_purchase_order"/>
+        <field name="domain_force">['|',('department_id', 'in', user.department_ids.ids),('department_id', '=', False)]</field>
+    </record>
+    <record id="hms_appointment_department_rule" model="ir.rule">
+        <field name="name">Appointment multi-department</field>
+        <field name="model_id" ref="acs_hms.model_hms_appointment"/>
+        <field name="domain_force">['|',('department_id', 'in', user.department_ids.ids),('department_id', '=', False)]</field>
+    </record>
+    <record id="hms_stock_quant_rule" model="ir.rule">
+        <field name="name">Stock Quant Rule</field>
+        <field name="model_id" ref="stock.model_stock_quant"/>
+        <field name="domain_force">[
+            '|','|',
+            ('location_id', 'in', user.department_ids.location_id.ids),
+            ('location_id.location_id', 'in', user.department_ids.location_id.ids),
+            ('location_id', '=', False)]</field>
+    </record>
+
+</odoo>

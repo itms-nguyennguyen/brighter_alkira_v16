@@ -1,0 +1,206 @@
+/* Overall container */
+.MainClass {
+   display: flex;
+   justify-content: space-between;
+   padding: 0 10px; /* Add padding for the entire container */
+}
+
+/* Left navigation menu */
+.left-class {
+   width: 150px; /* Updated width to 150px */
+   background-color: #f2f2f2; /* Adjust the background color as needed */
+   padding: 20px; /* Adjust padding as needed */
+   box-sizing: border-box;
+}
+
+/* Center container */
+.middle-class {
+   flex-grow: 1;
+   background-color: #ffffff; /* Adjust the background color as needed */
+   padding: 20px; /* Adjust padding as needed */
+   box-sizing: border-box;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+/* Image container within middle-class */
+.image-editor {
+   width: 90%;
+   max-width: 100%; /* Ensure it doesn't exceed the container width */
+   text-align: center;
+   padding: 20px; /* Add padding as needed */
+}
+
+/* Right-hand menu */
+.right-class {
+   width: 150px; /* Updated width to 150px */
+   background-color: #f2f2f2; /* Adjust the background color as needed */
+   padding: 20px; /* Adjust padding as needed */
+   box-sizing: border-box;
+}
+
+/* Adjustments for buttons */
+.btn {
+   margin-bottom: 10px;
+}
+
+/* Thumbnail images in left-class */
+.thumbnail-image {
+   max-width: 100%; /* Ensure the image fits within its container */
+   height: auto; /* Maintain aspect ratio */
+   display: block; /* Remove any extra spacing below the image */
+   margin-bottom: 10px; /* Add some spacing between thumbnails */
+}
+
+/* Custom CSS for log-popup container */
+.log-popup {
+   position: absolute;
+   bottom: 10px;
+   right: 10px;
+   width: 300px; /* Adjust the width as needed */
+   background-color: #f2f2f2; /* Adjust the background color as needed */
+   border: 1px solid #ccc; /* Add borders as needed */
+   padding: 10px; /* Add padding as needed */
+   z-index: 999; /* Ensure it's above other elements */
+   overflow-y: auto; /* Enable vertical scroll if needed */
+   max-height: 200px; /* Limit the maximum height if desired */
+   transition: right 0.3s ease; /* Add transition for sliding effect */
+}
+
+/* Custom CSS for log-container */
+#console-log {
+   max-height: 150px; /* Adjust the height as needed */
+   overflow-y: auto; /* Enable vertical scroll if needed */
+}
+
+/* Custom CSS for the "Toggle Log" button */
+#toggleLog {
+   margin-top: 10px;
+   cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Custom CSS for hiding log-popup */
+.log-popup.hidden {
+   right: -320px; /* Slide it off the screen when hidden */
+}
+
+
+ /* Bottom navigation styling for control buttons */
+ .bottom-class {
+   position: fixed;
+   bottom: 0;
+   left: 200px; 
+   right: 200px;
+   background-color: #f2f2f2;
+   padding: 10px;
+   display: flex;
+   justify-content: space-around;
+   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+   border-top: 2px solid #e0e0e0; /* Top border for distinction */
+}
+
+.bottom-class button, .bottom-class input[type="text"] {
+   font-size: 16px;
+   padding: 10px 20px;
+   border-radius: 5px;
+   border: none;
+   transition: background-color 0.3s;
+}
+
+.bottom-class button:hover {
+   opacity: 0.8;
+}
+
+.bottom-class .hidden {
+   display: none;
+}
+
+/* Style for the count table container, similar to log container */
+.count-table-container {
+   position: fixed;
+   right: 0;
+   bottom: 210px; /* Position above the log container */
+   width: 300px;
+   background-color: #fff;
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   padding: 10px;
+   font-size: 12px;
+   color: #333;
+   border-top-left-radius: 10px;
+   overflow-y: auto;
+}
+
+/* Style for the medicine flyout menu */
+#medicineFlyout {
+   position: fixed;
+   right: 0;
+   bottom: 60px; /* Adjust the position as needed */
+   width: 300px;
+   background-color: #fff;
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   padding: 10px;
+   font-size: 12px;
+   color: #333;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   border-bottom: 1px solid #ccc; /* Add a bottom border for separation */
+   z-index: 999; /* Ensure it's above other elements */
+   display: none; /* Initially hidden */
+   overflow-y: auto;
+}
+
+/* Style for the dosage flyout menu */
+#dosageFlyout {
+   position: fixed;
+   right: 0;
+   bottom: 60px; /* Adjust the position as needed */
+   width: 300px;
+   background-color: #fff;
+   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+   padding: 10px;
+   font-size: 12px;
+   color: #333;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
+   border-bottom: 1px solid #ccc; /* Add a bottom border for separation */
+   z-index: 999; /* Ensure it's above other elements */
+   display: none; /* Initially hidden */
+   overflow-y: auto;
+}i
+
+.medicine-menu {
+   position: relative;
+   display: inline-block;
+}
+
+.medicine-bottle {
+   /* Style for the medicine bottle button */
+   border: none;
+   background-color: transparent;
+   cursor: pointer;
+}
+
+.medicine-list {
+   display: none;
+   position: absolute;
+   background-color: #f9f9f9;
+   min-width: 160px;
+   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+   z-index: 1;
+}
+
+.medicine-list button {
+   color: black;
+   padding: 12px 16px;
+   text-decoration: none;
+   display: block;
+}
+
+.medicine-list button:hover {
+   background-color: #f1f1f1;
+}
+
+.hidden {
+   display: none;
+}

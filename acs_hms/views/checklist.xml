@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>     
+    <record id="view_medical_checklist_tree" model="ir.ui.view">
+        <field name="name">medical.checklist.tree</field>
+        <field name="model">medical.checklist</field>
+        <field name="arch" type="xml">
+            <tree string="Checklist">
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_medical_checklist_form" model="ir.ui.view">
+        <field name="name">medical.checklist.form</field>
+        <field name="model">medical.checklist</field>
+        <field name="arch" type="xml">
+            <form string="Checklist">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="Questions">
+                            <field name="detail_ids">
+                                  <tree editable="bottom">
+                                      <field name="name"/>
+                                  </tree>
+                            </field>
+                        </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_open_patient_medical_checklist" model="ir.actions.act_window">
+        <field name="name">Medical Checklist Template</field>
+        <field name="res_model">medical.checklist</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add a Medical Checklist. />
+            </p>
+        </field>
+    </record>
+
+
+    <record id="view_patient_medical_checklist_line_tree" model="ir.ui.view">
+        <field name="name">patient.medical.checklist.line.tree</field>
+        <field name="model">patient.medical.checklist.line</field>
+        <field name="arch" type="xml">
+            <tree string="Medical Checklist" create="0" delete="0" edit="0">
+                 <field name="checklist_id" string="Question" force_save="1"/>
+                 <field name="question_id" string="Row Answer" readonly="1" force_save="1"/>
+                 <field name="yes" widget="boolean_toggle"/>
+<!--                 <field name="no"/>-->
+            </tree>
+        </field>
+    </record>
+
+      <record id="act_open_tree_patient_medical_checklist" model="ir.actions.act_window">
+        <field name="name">Medical Checklist</field>
+        <field name="res_model">patient.medical.checklist.line</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add a Medical Checklist. />
+            </p>
+        </field>
+    </record>
+
+</odoo>

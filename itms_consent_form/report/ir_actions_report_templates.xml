@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_consent_document">
+    <t t-call="web.external_layout">
+        <t t-set="doc" t-value="doc.with_context(lang=doc.patient_id.partner_id.lang)" />
+        <div class="page">
+            <div class="oe_structure"/>
+            <h2 class="mt-4" style="text-align:center">
+                <span t-field="doc.category_id.name"/>
+            </h2>
+            <div class="row mt-4 mb-4" id="consentinformations">
+                <div>
+                    <p t-field="doc.content"/>
+                </div>
+            </div>
+
+              <div class="row mt-4" name="signature">
+                    <div t-attf-class="col-6 text-center">
+                        <h5>Patient Signature</h5>
+                        <img t-if="doc.patient_signature" t-att-src="image_data_uri(doc.patient_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                        <p t-field="doc.patient_signed_by"/>
+                    </div>
+                    <div t-attf-class="col-6 text-center">
+                        <h5>Clinician Signature</h5>
+                        <img t-if="doc.nurse_signature" t-att-src="image_data_uri(doc.nurse_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                        <p t-field="doc.nurse_signed_by"/>
+                    </div>
+              </div>
+
+
+        </div>
+    </t>
+</template>
+
+
+<template id="report_consent">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="itms_consent_form.report_consent_document" t-lang="doc.patient_id.lang"/>
+        </t>
+    </t>
+</template>
+
+
+</odoo>

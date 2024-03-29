@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_menu_consent" name="Portal layout : Consent menu entries" inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'consent'">
+                <a t-if="consent" t-attf-href="/my/consent-form?{{ keep_query() }}">Consent Form</a>
+                <t t-else="">Consent Form</t>
+            </li>
+<!--            <li t-if="consent">-->
+<!--                <span t-field="consent.name"/>-->
+<!--                <t t-out="consent.name"/>-->
+<!--            </li>-->
+        </xpath>
+    </template>
+
+    <template id="portal_my_home_consent" name="Show Consent Form" customize_show="True" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Consent Form</t>
+                <t t-set="url" t-value="'/my/consent-form'"/>
+                <t t-set="placeholder_count" t-value="'consent_count'"/>
+            </t>
+
+        </xpath>
+    </template>
+
+    <template id="portal_my_consent_form" name="My Consent Form" >
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Add Patient Consent Form</t>
+            </t>
+            <t t-if="consent_forms" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th class="text-end">Title</th>
+                        <th>Patient #</th>
+                        <th class="text-end">Signed by</th>
+                        <th class="text-center"/>
+                    </tr>
+                </thead>
+                <t t-foreach="consent_forms" t-as="consent">
+                    <tr>
+                        <td><a t-att-href="consent.get_portal_url()"><t t-out="consent.category_id.name"/></a></td>
+                        <td class="text-end"><span t-field="consent.patient_id.name"/></td>
+                        <td class="text-end"><span t-field="consent.patient_signed_by"/></td>
+                        <td class="text-center">
+                        </td>
+                    </tr>
+                </t>
+            </t>
+            <p t-else="">There are currently no consent form for your account.</p>
+        </t>
+    </template>
+
+    <template id="consent_portal_template" name="Consent Portal Template" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <t t-set="o_portal_fullwidth_alert" groups="sales_team.group_sale_salesman">
+                <!-- Uses backend_url provided in rendering values -->
+                <t t-call="portal.portal_back_in_edit_mode"/>
+            </t>
+            <div class="row mt16 o_portal_sale_sidebar">
+                <!-- Sidebar -->
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-auto d-print-none'"/>
+                    <t t-set="title">
+                        <h4 class="mb-0"><b t-field="consent.patient_id.name" data-id="name" /> </h4>
+                    </t>
+                    <t t-set="entries">
+                        <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item d-grid align-content-start">
+                                <t t-if="not consent.is_agree">
+                                    <a role="button" class="btn btn-primary mb8" data-bs-toggle="modal" data-bs-target="#modalaccept" href="#">
+                                    <i class="fa fa-check"/>Accept &amp; Sign
+                                </a>
+                                </t>
+                                <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                    <div class="btn-group flex-grow-1 me-1 mb-1">
+                                        <a class="btn btn-secondary o_download_btn" t-att-href="consent.get_portal_url(report_type='pdf', download=True)" title="Download"><i class="fa fa-download"/> Download</a>
+                                    </div>
+                                    <div class="btn-group flex-grow-1 mb-1">
+                                        <a class="btn btn-secondary o_print_btn o_portal_invoice_print" t-att-href="consent.get_portal_url(report_type='pdf')" id="print_consent_report" title="Print" target="_blank"><i class="fa fa-print"/> Print</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="navspy list-group-item ps-0 flex-grow-1" t-ignore="true" role="complementary">
+                                <ul class="nav flex-column bs-sidenav"></ul>
+                            </li>
+                            <li t-if="consent.nurse_id" class="list-group-item flex-grow-1">
+                                <div class="small mb-1">
+                                    <strong class="text-muted">Nurse</strong>
+                                </div>
+                                <div class="row flex-nowrap">
+                                    <div class="col flex-grow-0 pe-2">
+                                        <img class="rounded-circle mr4 float-start o_portal_contact_img"
+                                            t-att-src="image_data_uri(consent.nurse_id.partner_id.avatar_1024)"
+                                            alt="Contact"/>
+                                    </div>
+                                    <div class="col ps-0" style="min-width: 150px">
+                                        <span t-field="consent.nurse_id.partner_id"
+                                            t-options='{"widget": "contact", "fields": ["name", "phone"], "no_marker": True}'/>
+                                        <a href="#discussion" class="small">
+                                            <i class="fa fa-comment"></i> Send message
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </t>
+                </t>
+                 <!-- Page content -->
+                <div id="consent_consent_content" class="col-12 col-lg justify-content-end">
+                    <div role="dialog" class="modal fade" id="modalaccept">
+                        <div class="modal-dialog">
+                            <form id="accept" method="POST" t-att-data-consent-id="consent.id" t-att-data-token="consent.access_token" t-att-data-is-agree="consent.is_agree" class="js_accept_json modal-content js_website_submit_form">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <header class="modal-header">
+                                    <h4 class="modal-title"><em t-out="consent.name"/> </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </header>
+                                <main class="modal-body" id="sign-dialog">
+                                    <p>
+                                        <input type="checkbox" class="s_website_form_input form-check-input" id="is_agree" name="is_agree" value="consent.is_agree" required="1"/>
+                                        <span>I read and give my consent to this document</span>
+                                    </p>
+                                    <t t-if="not consent.is_agree">
+                                        <t t-call="portal.signature_form">
+                                            <t t-set="call_url" t-value="consent.get_portal_url(suffix='/accept')"/>
+                                            <t t-set="default_name" t-value="consent.patient_id.name"/>
+                                        </t>
+                                    </t>
+                                </main>
+                            </form>
+                        </div>
+                    </div>
+                      <!-- main content -->
+                    <div t-attf-class="card #{'pb-5' if report_type == 'html' else ''}" id="portal_consent_content">
+                        <div t-call="itms_consent_form.consent_content"/>
+                    </div>
+                       <!-- bottom actions -->
+                    <div class="row justify-content-center text-center d-print-none pt-1 pb-4">
+
+                        <t>
+                            <div class="col-sm-auto mt8">
+                                <t t-if="not consent.is_agree">
+                                    <a role="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalaccept" href="#"><i class="fa fa-check"/>Accept &amp; Sign</a>
+                                 </t>
+                            </div>
+                            <div class="col-sm-auto mt8">
+                                <a role="button" class="btn btn-secondary" href="#discussion"><i class="fa fa-comment"/> Feedback</a>
+                            </div>
+<!--                            <div class="col-sm-auto mt8">-->
+<!--                                <a role="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modaldecline" href="#"> <i class="fa fa-times"/> Reject</a>-->
+<!--                            </div>-->
+                        </t>
+
+                    </div>
+
+                    <!-- chatter -->
+                    <div id="consent_communication" class="mt-4">
+                        <h2>History</h2>
+                        <t t-call="portal.message_thread"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="consent_content" name="Consent Portal Content">
+        <!-- Intro -->
+<!--        <div id="introduction" t-attf-class="pb-2 pt-3 #{'card-header bg-white' if report_type == 'html' else ''}">-->
+<!--          <h2 class="my-0">-->
+<!--                <em t-out="consent.name"/>-->
+<!--            </h2>-->
+<!--        </div>-->
+        <div t-attf-class="#{'card-body' if report_type == 'html' else ''}">
+            <!-- Informations -->
+<!--            <div id="informations">-->
+<!--                <div class="row" id="so_date">-->
+<!--                    <div class="mb-3 col-6">-->
+<!--                      <t t-if="consent.patient_id">-->
+<!--                        <strong>Title:</strong>-->
+<!--                      </t>-->
+<!--                      <span t-field="consent.name"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <section t-if="not is_html_empty(consent.content)" id="content" class="mt-5">
+                <h4 style="text-align: center;" class=""><em t-out="consent.category_id.name"/></h4>
+                <hr class="mt-0 mb-1"/>
+                <t><em t-field="consent.content"/></t>
+            </section>
+
+            <section id="signature" name="Signature">
+                <div class="row mt-4" name="signature">
+                    <div t-attf-class="#{'col-3' if report_type != 'html' else 'col-sm-7 col-md-4'} ms-auto text-center" style="width:50% !important;">
+                        <h5>Patient Signature</h5>
+                        <img t-if="consent.patient_signature" t-att-src="image_data_uri(consent.patient_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                        <p t-field="consent.patient_signed_by"/>
+                    </div>
+                    <div t-attf-class="#{'col-3' if report_type != 'html' else 'col-sm-7 col-md-4'} ms-auto text-center" style="width:50% !important;">
+                        <h5>Nurse Signature</h5>
+                        <img t-if="consent.nurse_signature" t-att-src="image_data_uri(consent.nurse_signature)" style="max-height: 6rem; max-width: 100%;"/>
+                        <p t-field="consent.nurse_signed_by"/>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </template>
+
+</odoo>

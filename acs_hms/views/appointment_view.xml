@@ -1,0 +1,1115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Appointment Purpose -->
+    <record id="view_appointment_purpose_form_tree" model="ir.ui.view">
+        <field name="name">appointment.purpose.tree</field>
+        <field name="model">appointment.purpose</field>
+        <field name="arch" type="xml">
+            <tree string="Appointment Purpose">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_appointment_purpose_form_form" model="ir.ui.view">
+        <field name="name">appointment.purpose.form.form</field>
+        <field name="model">appointment.purpose</field>
+        <field name="arch" type="xml">
+            <form string="Appointment Purpose">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Appointment Purpose"/>
+                        </h1>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_open_appointment_purpose" model="ir.actions.act_window">
+        <field name="name">Appointment Purpose</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">appointment.purpose</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add an Appointment Purpose.
+            </p>
+        </field>
+    </record>
+
+    <!-- Appointment Cabin -->
+    <record id="view_appointment_cabin_form_tree" model="ir.ui.view">
+        <field name="name">appointment.cabin.tree</field>
+        <field name="model">appointment.cabin</field>
+        <field name="arch" type="xml">
+            <tree string="Room">
+                <field name="name" string="Appointment Room"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_appointment_cabin_form_form" model="ir.ui.view">
+        <field name="name">appointment.cabin.form.form</field>
+        <field name="model">appointment.cabin</field>
+        <field name="arch" type="xml">
+            <form string="Room">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Appointment Room" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Appointment Room"/>
+                        </h1>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_open_appointment_cabin" model="ir.actions.act_window">
+        <field name="name">Room</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">appointment.cabin</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add an Room.
+            </p>
+        </field>
+    </record>
+
+    <!-- Cancellation  -->
+    <record id="view_acs_cancel_reason_tree" model="ir.ui.view">
+        <field name="name">acs.cancel.reason.tree</field>
+        <field name="model">acs.cancel.reason</field>
+        <field name="arch" type="xml">
+            <tree string="Cancellation" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_acs_cancel_reason" model="ir.actions.act_window">
+        <field name="name">Cancellation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">acs.cancel.reason</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add a Cancellation.
+            </p>
+        </field>
+    </record> 
+
+    <!-- Appointment -->
+    <record model="ir.ui.view" id="appointment_kanban_view">
+        <field name="name">appointment.kanban</field>
+        <field name="model">hms.appointment</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="patient_id"/>
+                <field name="image_128"/>
+                <field name="date"/>
+                <field name="display_name"/>
+                <field name="state"/>
+                <field name="physician_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_res_partner_kanban">
+                            <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                            <t t-set="placeholder" t-value="'/base/static/img/avatar_grey.png'"/>
+                            <div class="o_kanban_image_fill_left o_kanban_image_full" t-attf-style="background-image: url(#{kanban_image('hms.patient', 'image_128', record.patient_id.raw_value, placeholder)})" role="img"/>
+                            <div class="oe_kanban_details">
+                                <strong class="oe_partner_heading">
+                                    <field name="display_name"/>
+                                </strong>
+                                <ul>
+                                    <li t-if="record.patient_id.raw_value">
+                                        <field name="patient_id"/>
+                                    </li>
+                                    <li t-if="record.date.raw_value">
+                                        <field name="physician_id"/>
+                                    </li>
+                                    <li t-if="record.date.raw_value">
+                                        <field name="date"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="view_hms_appointment_tree" model="ir.ui.view">
+        <field name="name">hms.appointment.tree</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state=='draft'" decoration-muted="state=='cancel'" decoration-danger="state=='waiting'" name="appointment_tree" >
+                <field name="name"/>
+                <field name="purpose_id" optional="hide"/>
+                <field name="cabin_id" optional="hide"/>
+                <field name="patient_id"/>
+                <field name="date"/>
+                <field name="department_id" groups="acs_hms.group_allow_multi_department"/>
+                <field name="nurse_id"/>
+                <field name="responsible_id" invisible="1"/>
+                <field name="create_uid" optional="hide"/>
+                <field name="consultation_type" optional="show"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+                <field name="invoice_exempt" string="Invoice Exempt" optional="hide"/>
+                <field name="state" optional="show" decoration-info="state=='draft'" decoration-muted="state=='cancel'" decoration-danger="state=='waiting'" decoration-success="state=='done'" decoration-primary="state=='in_consultation'" decoration-warning="state=='to_invoice'" decoration-it="state=='pause'" widget="badge"/>
+                <field name="waiting_date_start" invisible="1"/>
+                <field name="waiting_date_end" invisible="1"/>
+                <field name="date_start" invisible="1"/>
+                <field name="date_end" invisible="1"/>
+                <!-- This is options to load fast. Timer read records every-time and it takes more loading time So its optional 
+                <field name="waiting_duration_timer" widget="AcsTimer" options="{'widget_start_field': 'waiting_date_start', 'widget_stop_field': 'waiting_date_end', 'duration_field': 'waiting_duration_timer'}" optional="hide"/> -->
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hms_appointment_form" model="ir.ui.view">
+        <field name="name">hms.appointment.form</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <form delete="0" duplicate="0">
+                <header>
+                    <button name="appointment_confirm" states="draft" type="object" groups="acs_hms_base.group_hms_manager" string="Schedule &amp; Send" class="oe_highlight"/>
+                    <button name="appointment_waiting" states="confirm" type="object" groups="acs_hms_base.group_hms_manager" string="Waiting" class="oe_highlight" invisible="1"/>
+                    <button name="appointment_waiting_manual" states="confirm" type="object" groups="acs_hms_base.group_hms_manager" string="Send Consent Form(s)" class="oe_highlight"/>
+                    <button name="print_report" string="Print" type="object" states="draft,confirm" invisible="1"/>
+<!--                    <button name="action_start_survey" states="confirm_consent" groups="acs_hms_base.group_hms_manager" type="object" string="Start Medical Checklist" class="oe_highlight"/>-->
+                    <button name="action_confirm_checklist" states="confirm_consent" groups="acs_hms_base.group_hms_manager" type="object" string="Confirm" class="oe_highlight"/>
+                    <button name="action_pause" states="in_consultation" groups="acs_hms_base.group_hms_manager" type="object" string="Pause" invisible="1"/>
+                    <button name="action_start_paused" states="pause" groups="acs_hms_base.group_hms_manager" type="object" string="Start"/>
+                    <button name="button_pres_req" string="Request Prescription" groups="acs_hms_base.group_hms_manager" type="object" states="in_consultation,invoiced" class="oe_highlight" invisible="1"/>
+<!--                    <button name="create_invoice" string="Create Invoice" groups="account.group_account_invoice" attrs="{'invisible': [('state','!=','to_invoice')]}" type="object" class="oe_highlight"/>-->
+ <!--                    <button name="consent_forms_confirm" states="confirm" type="object" groups="acs_hms_base.group_hms_manager" string="Send Consent Email" class="oe_highlight"/>-->
+<!--                    <button name="action_appointment_send" string="Send by Email" type="object" states="draft,confirm"/>-->
+                    <!-- <button name="create_invoice" string="Create Invoice" groups="account.group_account_invoice" attrs="{'invisible': ['|','|',('consumable_line_ids','=',False),('invoice_id','!=',False),('state','=','draft')]}" type="object" class="oe_highlight"/> -->
+                    <!-- <button name="create_invoice" string="Create Invoice" groups="account.group_account_invoice" attrs="{'invisible': ['|',('invoice_id','!=',False),('state','!=','to_invoice')]}" type="object" class="oe_highlight"/> -->
+                    <!-- <button name="create_invoice" string="Create Invoice" groups="account.group_account_invoice" attrs="{'invisible': ['|','|','|',('appointment_invoice_policy','!=','anytime'),('invoice_id','!=',False),('state','=','to_invoice'), ('invoice_exempt','=', True)]}" type="object" class="oe_highlight"/>
+                    <button name="create_invoice" string="Create Invoice" groups="account.group_account_invoice" attrs="{'invisible': ['|','|','|',('appointment_invoice_policy','!=','advance'),('invoice_id','!=',False),('state','=','to_invoice'), ('invoice_exempt','=', True)]}" type="object" class="oe_highlight"/> -->
+                    <!-- <button name="action_create_invoice_with_procedure" string="Create Invoice (With Procedure)" groups="account.group_account_invoice" attrs="{'invisible': ['|','|',('procedure_to_invoice_ids','=',[]),('invoice_id','!=',False), ('invoice_exempt','=', True)]}" type="object" class="oe_highlight"/> -->
+                     <button name="create_consumed_prod_invoice" string="Create Invoice" attrs="{'invisible': ['|',('consumable_invoice_id','!=', False), ('state','!=','to_after_care')]}" groups="account.group_account_invoice" type="object" class="oe_highlight"/>
+                    <button
+                        name="consultation_done" 
+                        states="in_consultation" 
+                        groups="acs_hms_base.group_hms_manager" 
+                        type="object" 
+                        string="Start Treatment" 
+                        class="oe_highlight"
+                        context="{
+                            'default_appointment_id': id,
+                            'default_patient_id': patient_id,
+                            'default_nurse_id': nurse_id,
+                            'from_appointment': True}"
+                        />
+                    <button name="appointment_done" states="to_after_care" groups="acs_hms_base.group_hms_manager" type="object" string="Send Aftercare" class="oe_highlight"/>
+                    <button name="%(action_acs_cancel_reason_wiz)d" string="Cancel" states="draft,confirm,confirm_consent,in_consultation" type="action" attrs="{'invisible': [('id','=',False)]}"/>
+                    <button name="appointment_draft" string="Reschedule" states="cancel" type="object" class="oe_highlight"/>
+                    <button name="create_patient" string="New Patient" states="draft" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" invisible="1" statusbar_visible="draft,confirm,confirm_consent,in_consultation,to_after_care,done"/>
+                    <field name="appointment_invoice_policy" invisible="1"/>
+                    <field name="consumable_invoice_id" invisible="1"/>
+                    <field name="consumable_line_ids" invisible="1"/>
+                    <field name="procedure_to_invoice_ids" invisible="1" widget="many2many_tags"/>
+                </header>
+                <div class="alert alert-error text-center" role="alert" style="margin-bottom:0px; background-color:#f8b9b9;"  attrs="{'invisible': [('alert_count','=',0)]}">
+                    <field name="medical_alert_ids" nolabel="1" widget="many2many_tags"/>
+                </div>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" groups="acs_hms_base.group_hms_manager" invisible="1">
+<!--                        <button name="action_refer_doctor" string="Refer. To" type="object" states="in_consultation,invoiced" class="oe_stat_button" icon="fa-pencil-square-o"/>-->
+                        <!-- <button name="action_view_treatment" type="object" class="oe_stat_button" groups="acs_hms_base.group_hms_manager" icon="fa-user-md">
+                            <field string="Treatments" name="treatment_count" widget="statinfo"/>
+                        </button> -->
+                        <!-- hide 2 button if not save when create it -->
+                        <!-- <button class="oe_stat_button btn-green" name="action_prescription" string="Prescription" type="object"  icon="fa-pencil-square-o"  attrs="{'invisible': ['|',('id','=',False),('prescription_count', '=', 0)]}">
+                            <field string="Prescriptions" name="prescription_count" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" name="action_prescription" string="Prescription" type="object"  icon="fa-pencil-square-o"  attrs="{'invisible': ['|',('id','=',False),('prescription_count', '&gt;', 0)]}">
+                            <field string="Prescriptions" name="prescription_count" widget="statinfo"/>
+                        </button> -->
+                <!-- <button  attrs="{'invisible': [('is_patient_valid_prescription','=',False)]}" name="action_prescription" groups="acs_hms_base.group_hms_manager" type="object" class="oe_stat_button btn-green" icon="fa-wpforms">
+                    <field string="Prescriptions" name="prescription_count" widget="statinfo"/>
+                </button>
+                <button attrs="{'invisible': [('is_patient_valid_prescription','=', True)]}" name="action_prescription" groups="acs_hms_base.group_hms_manager" type="object" class="oe_stat_button" icon="fa-wpforms">
+                    <field string="Prescriptions" name="prescription_count" widget="statinfo"/>
+                </button> -->
+
+
+
+                        <!-- <button class="oe_stat_button" type="object" name="view_invoice" icon="fa-pencil-square-o" attrs="{'invisible': [('invoice_count', '=', 0)]}" groups="account.group_account_invoice">
+                            <field string="Invoices" name="invoice_count" widget="statinfo"/>
+                        </button> -->
+                        <!-- <button name="action_view_patient_procedures" class="oe_stat_button" icon="fa-medkit" type="object" string="Procedures"/> -->
+                        <field name="prescription_ids" invisible="1"/>
+                        <button class="oe_stat_button" type="object" name="action_view_attachments" icon="fa-files-o" attrs="{'invisible': [('attach_count', '=', 0)]}">
+                            <field string="Documents" name="attach_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <field name="image_128" widget='image' class="oe_avatar" invisible="1"/>
+                    <div class="oe_title" invisible="1">
+                        <h1>
+                            <field name="name" invisible="1"/>
+                        </h1>
+                    </div>
+
+                    <!-- Invisible Fields -->
+                    <field name="invoice_id" invisible="1"/>
+                    <field name="payment_state" invisible="1"/>
+                    <field name="waiting_date_start" invisible="1"/>
+                    <field name="waiting_date_end" invisible="1"/>
+                    <field name="date_start" invisible="1"/>
+                    <field name="date_end" invisible="1"/>
+                    <field name="alert_count" invisible="1"/>
+                    <field name='invoice_exempt' invisible="1"/>
+                    <field name='consumable_line_count' invisible="1"/>
+                    <field name="department_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="reminder_date" invisible="1"/>
+                    <field name="acs_reminder_sent" invisible="1"/>
+
+               
+                    <notebook>
+                    <page name="general" string="General">
+                    <group>
+                        <group>
+                            <field name="is_new_patient" invisible="1"/>
+                            <field name="patient_id" options="{'no_open': True}"/>
+                            <field name="age"/>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="department_id" options="{'no_open': True}" invisible="1"/>
+                            <field name="department_type" invisible="1"/>
+                            <field name="physician_id" required="0" string="Prescriber" options="{'no_open': True}" invisible="1"/>
+                            <field name="nurse_id" options="{'no_open': True}"/>
+                            <field name="cabin_id" options="{'no_open': True}"/>
+                             <field name="medicine_ids" widget="many2many_tags" groups="acs_hms_base.group_hms_manager" invisible="1"/>
+                            <field name="diseases_ids" widget="many2many_tags" groups="acs_hms_base.group_hms_manager" invisible="1"/>
+                            <field name="responsible_id" invisible="1"/>
+                            <field name="treatment_id" invisible="1" domain="[('patient_id','=', patient_id)]" context="{'default_patient_id': patient_id, 'default_department_id': department_id, 'default_physician_id': physician_id}"/>
+                            <field name="urgency" invisible="1"/>
+                            <field name="refer_reason" invisible="1"/>
+                            <field name="refered_from_appointment_id" attrs="{'invisible': [('refered_from_appointment_id','=',False)]}" readonly="1" force_save="1"/>
+                            <field name="refered_from_physician_id" attrs="{'invisible': [('refered_from_appointment_id','=',False)]}"/>
+                            <field name="refered_from_reason" attrs="{'invisible': [('refered_from_appointment_id','=',False)]}"/>
+                            <field name="refered_to_appointment_id" attrs="{'invisible': [('refered_to_appointment_id','=',False)]}" readonly="1" force_save="1"/>
+                            <field name="refered_to_physician_id" attrs="{'invisible': [('refered_to_appointment_id','=',False)]}"/>
+                            <field name="waiting_duration_timer" widget="AcsTimer" attrs="{'invisible': [('state','!=','waiting')]}" options="{'widget_start_field': 'waiting_date_start', 'widget_stop_field': 'waiting_date_end', 'duration_field': 'waiting_duration_timer'}"/>
+                            <field name="waiting_duration" attrs="{'invisible': [('state','=','waiting')]}" widget="float_time" invisible="1"/>
+                            <field name="pause_duration" widget="float_time" attrs="{'invisible': [('pause_duration','=',0)]}"/>
+                        </group>
+                        <group>
+<label for="date" string="Schedule Date" invisible="0"/>
+<div class="o_row" invisible="0">
+    <field name="date" nolabel="1" class="oe_inline" widget="datetimepicker" options="{'related_end_date': 'date_to'}"/>
+    <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+    <field name="date_to" nolabel="1" class="oe_inline" widget="datetimepicker" options="{'related_start_date': 'date'}"/>
+</div>
+                            <field name="planned_duration" widget="float_time" invisible="1"/>
+                            <field name="duration_selection" widget="radio"  options="{'horizontal': true}" invisible="0"/>
+                            <field name="consultation_type"/>
+                            <field name="follow_date" invisible="1" attrs="{'invisible': [('state', 'not in', ['in_consultation','done','to_invoice'])]}"/>
+                            <field name="product_id" invisible="1" context="{'default_detailed_type':'service','default_hospital_product_type':'consultation'}"/>
+                            <field name="is_prescription_expired" invisible="1"/>
+                            <label for="prescription_id" string="Prescription Order" invisible="1" />
+                            <div class="o_row" invisible="1">
+                                <field name="prescription_id" invisible="1" decoration-danger="is_prescription_expired==True" class="oe_inline" domain="[('patient_id','=',patient_id),('state','=','prescription'),('prescription_line_ids.repeat','&gt;','0')]" options="{'no_quick_create': 1}" context="{'default_patient_id': patient_id}"/>
+                                <field name="prescription_repeat" invisible="1" decoration-danger="is_prescription_expired==True" class="oe_inline"/>
+                            </div>
+                            <field name="consent_id" invisible="1" domain="[('patient_id','=',patient_id)]" options="{'no_quick_create': 1}" context="{'default_patient_id': patient_id,'default_nurse_id': nurse_id}"/>
+                            <field name="is_confirmed_consent" invisible="1"/>
+                            <!-- <field name="procedure" string="Treatment" invisible="1"/> -->
+                            <field name="procedure_ids" string="Treatments" widget="many2many_tags"/>
+                            <label for="invoice_exempt" string="No Charge" invisible="1"/>
+                            <div name='invoice_exemption' class="o_row" invisible="1">
+                                <field name='invoice_exempt' class="oe_inline"/>
+                                <button name="acs_apply_invoice_exemption" string="Apply/Remove"
+                                    type="object" class="oe_inline fa fa-arrow-right oe_link"
+                                    attrs="{'invisible': [('invoice_id','!=', False)]}"
+                                    groups="acs_hms_base.group_hms_manager" />
+                            </div>
+                            <div name='call_telehealth' invisible="1"
+                                attrs="{'invisible': [('consultation_type','!=','consultation_prescription')]}">
+                                <a name="acs_apply_call_telehealth"
+                                    class="btn btn-outline-primary" onclick="call_telehealth();">Call
+                                    Telehealth</a>
+                            </div>
+                                    <field name="purpose_id" invisible="1" />
+                            <field name="outside_appointment" invisible="1" />
+                            <field name="location" widget="url" invisible="1"
+                                attrs="{'invisible': [('outside_appointment','=',False)]}" />
+                            <field name="is_video_call" invisible="1" />
+
+                            <field name="pricelist_id" groups="product.group_product_pricelist"
+                                options="{'no_open':True,'no_create': True}" invisible="1" />
+                            <field name="user_id" widget="many2one_avatar_user" invisible="1" />
+                            <field name="ref_physician_id" invisible="1" />
+                            <field name="company_id" invisible="1" groups="base.group_multi_company"
+                                options="{'no_create': True}" />
+                            <field name="appointment_duration_timer" widget="AcsTimer" invisible="1"
+                                attrs="{'invisible': [('state','!=','in_consultation')]}"
+                                options="{'widget_start_field': 'date_start', 'widget_stop_field': 'date_end', 'duration_field': 'appointment_duration_timer'}" />
+                            <field name="appointment_duration" widget="float_time"
+                                attrs="{'invisible': [('state','=','in_consultation')]}"
+                                invisible="1" />
+                            <separator string="Cancellation" name="acs_cancel_reason"
+                                attrs="{'invisible': [('state','!=','cancel')]}" />
+                            <field name="cancel_reason_id" invisible="1"
+                                attrs="{'invisible': [('state','!=','cancel')]}" />
+
+                            <field name="cancel_reason" placeholder="Cancellation Reason..."
+                                attrs="{'invisible': [('state','!=','cancel')]}" />
+                            <field name="is_checklist" invisible="1"/>
+                            <field name="pos_config_id" invisible="1"/>
+                        </group>
+                    </group>
+                    </page>
+                        <page name="consent_form" string="Consent Form">
+                            <button name="%(acs_hms.multiple_consent_action)d"
+                             class="oe_highlight" string="Select Multiple Forms" type="action"/>
+                            <field name="consent_ids" context="{'default_patient_id': patient_id,'default_nurse_id': nurse_id, 'default_name':'consent'}">
+                                <tree editable="bottom">
+                                    <field name="nurse_signature" invisible="1"/>
+                                    <field name="appointment_id" invisible="1" context="{'default_appointment_id': active_id}"/>
+                                    <field name="knowledge_id" />
+                                    <field name="name" invisible="1"/>
+                                    <field name="patient_id" invisible="1"/>
+                                    <field name="nurse_id" invisible="1"/>
+                                    <field name="nurse_signed_on"/>
+                                    <button name="consent_forms_confirm"
+                                            type="object"
+                                            class="btn btn-secondary fa fa-envelope-o"
+                                            aria-label="Send Consent Form"
+                                            data-tooltip="Send Consent Form"/>
+
+                                    <button name="action_open_form"
+                                            type="object"
+                                            class="fas fa fa-signature"
+                                            aria-label="Internal link"
+                                            data-tooltip="Internal link"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Medical Treatment Checklist">
+                             <field name="medical_checklist_answer_ids" widget="one2many_list" options="{'always_reload': True}">
+                                  <tree editable="bottom" create="0" delete="0">
+                                    <field name="checklist_id" string="Question" force_save="1" invisible="1"/>
+                                     <field name="question_id" string="Row Answer" readonly="1" force_save="1"/>
+                                     <field name="yes" widget="boolean_toggle"/>
+<!--                                     <field name="no"/>-->
+                                </tree>
+                            </field>
+
+<!--                            <group>-->
+<!--                                <group>-->
+<!--                                    <label for="survey_id" groups="survey.group_survey_user"/>-->
+<!--                                    <div groups="survey.group_survey_user" class="o_row">-->
+<!--                                        <field name="survey_id"-->
+<!--                                            context="{'default_access_mode': 'token'}" invisible="1"/>-->
+<!--                                        <button string="Display Checklist Form" name="action_start_survey" type="object" invisible="1" attrs="{'invisible':[('survey_id','=',False)]}" class="oe_link pb-1"/>-->
+<!--                                        <button string="Update Results" name="update_checklist" type="object" attrs="{'invisible':[('survey_id','=',False)]}" class="oe_link pb-1" invisible="0"/>-->
+<!--                                    </div>-->
+<!--                                 </group>-->
+<!--                                <group></group>-->
+<!--                            </group>-->
+<!--                            <field name="survey_answer_ids" widget="one2many_list" options="{'always_reload': True}">-->
+<!--                                  <tree decoration-muted="skipped == True">-->
+<!--                                    <field name="question_sequence" invisible="1"/>-->
+<!--                                    <field name="create_date" optional="hidden"/>-->
+<!--                                    <field name="page_id" optional="hidden"/>-->
+<!--                                    <field name="question_id"/>-->
+<!--                                    <field name="answer_type" optional="hidden"/>-->
+<!--                                    <field name="skipped" optional="hidden"/>-->
+<!--                                    <field name="matrix_row_id" string="Row answer"/>-->
+<!--                                      <field name="suggested_answer_yes"/>-->
+<!--                                      <field name="suggested_answer_no"/>-->
+<!--                                    <field name="answer_is_correct" optional="hidden"/>-->
+<!--                                    <field name="answer_score" sum="Score" optional="hidden"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                            <separator string="Individual Checklist"/>-->
+<!--                            <field name="answer_individual_ids" widget="one2many_list">-->
+<!--                                <tree string="Individual Checklist">-->
+<!--                                    <field name="date" string="Created on"/>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="yes"/>-->
+<!--                                    <field name="no"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                             <separator string="Relevant Medical history"/>-->
+<!--                             <field name="answer_relevant_ids" widget="one2many_list">-->
+<!--                                <tree string="Relevant Medical history">-->
+<!--                                    <field name="date" string="Created on"/>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="yes"/>-->
+<!--                                    <field name="no"/>-->
+<!--                                </tree>-->
+<!--                             </field>-->
+<!--                             <separator string="Medications"/>-->
+<!--                             <field name="answer_medication_ids" widget="one2many_list">-->
+<!--                                <tree string="Medications">-->
+<!--                                    <field name="date" string="Created on"/>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="yes"/>-->
+<!--                                    <field name="no"/>-->
+<!--                                </tree>-->
+<!--                             </field>-->
+<!--                             <separator string="Additional"/>-->
+<!--                            <field name="answer_addition_ids"  widget="one2many_list">-->
+<!--                                <tree string="Additional">-->
+<!--                                    <field name="date" string="Created on"/>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="yes"/>-->
+<!--                                    <field name="no"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </page>
+                        <page name="prescription_line_ids" string="Existing Prescription" invisible="1">
+                            <field name="prescription_line_ids" invisible="1">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="repeat"/>
+                                    <field name="scheduled_date"/>
+                                    <button name="openWizard" string="Start Treatment" type="object" attrs="{'invisible': [('is_done','=', True)]}"/>
+                                    <field name="treatment_id" readonly="1"/>
+                                    <field name="is_done" readonly="1" attrs="{'readonly': [('is_done','=', '1')]}"/>
+                                    <field name="done_at" readonly="1"/>
+                                    <!-- for invoice part to link appointment treatment invoice -->
+                                    <field name="prescription_line_id" invisible="1"/>
+                                    <field name="is_invoiced" invisible="1"/>
+                                    <field name="done_in_appointment_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page name="prescription_order" string="Request Prescription">
+                            <field name="prescription_ids" context="{'default_patient_id': patient_id, 'patient_id': patient_id}" mode="tree, form">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="prescription_date_format" string="Prescription date"/>
+                                    <field name="first_product_id"/>
+                                    <field name="physician_id"/>
+                                    <field name="patient_id" invisible="1"/>
+                                    <button name="status"/>
+                                </tree>
+                                <form string="ACS Prescription Order" >
+                                    <header invisible="not context.get('show_pop_up',True)">
+                    <button name="pay_confirm" states="draft" string="Submit for Request" type="object" class="oe_highlight" groups="acs_hms_base.group_hms_manager, acs_hms.group_hms_doctor"/>
+<!--                    <button name="confirm_without_pay" states="draft" string="Submit for Request without Payment" type="object" class="oe_highlight" groups="acs_hms_base.group_hms_manager"/>-->
+                    <button name="button_done" states="prescription" string="Done" type="object" class="oe_highlight" invisible="1" groups="acs_hms.group_hms_doctor, acs_hms.group_hms_doctor_clinic, acs_hms_base.group_hms_manager"/>
+                    <button name="print_report" string="Print" type="object" states="prescription"/>
+                    <button name="action_prescription_send" string="Send by Email" type="object" states="prescription" invisible="1"/>
+                    <button name="button_reset" states="prescription" string="Edit" type="object" groups="acs_hms_base.group_hms_manager, acs_hms.group_hms_doctor" invisible="1"/>
+                     <button name="button_request_change" type="object" string="Request Change" class="oe_highlight" confirm="Do you wish to contact the Prescriber/Doctor to request a change?" groups="acs_hms_base.group_hms_manager" attrs="{'invisible': ['|',('is_locked','=',True),('state','!=','prescription')]}"/>
+                     <button name="button_edit" string="Edit" type="object" groups="acs_hms.group_hms_doctor, acs_hms.group_hms_doctor_clinic" attrs="{'invisible': ['|',('is_locked','=',True),('state','not in',('prescription','request'))]}"/>
+                     <button name="button_approve_request" states="request" string="Confirm" type="object" groups="acs_hms.group_hms_doctor" attrs="{'invisible': [('state','!=','request')]}"/>
+                     <!-- <button name="button_cancel" states="prescription" string="Cancel" type="object" groups="acs_hms_base.group_hms_manager"/> -->
+                     <button name="button_prescribe_confirm" states="confirmed" string="Approve" class="oe_highlight" type="object" groups="acs_hms.group_hms_doctor_clinic" attrs="{'invisible': ['|',('is_owner_prescriber','=',True),('state','!=','confirmed')]}"/>
+                     <button name="button_prescribe_confirm" states="draft" string="Approve" type="object" class="oe_highlight" groups="acs_hms.group_hms_doctor_clinic" attrs="{'invisible': ['|',('is_owner_prescriber','=',False),('state','!=','draft')]}"/>
+                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,prescription,request,finished"/>
+                </header>
+                                    <div invisible="not context.get('show_pop_up',True)" class="alert alert-error text-center" role="alert" style="margin-bottom:0px; background-color:#f8b9b9;"  attrs="{'invisible': [('alert_count','=',0)]}">
+                                        <field name="medical_alert_ids" nolabel="1" widget="many2many_tags"/>
+                                    </div>
+                                    <sheet>
+                                        <div invisible="not context.get('show_pop_up',True)">
+                                <div class="oe_button_box" name="button_box">
+                                    <!-- <button string="Make Appointment" name="make_appointment" type="object" class="oe_stat_button" groups="acs_hms_base.group_hms_manager" icon="fa-stethoscope">
+                                    </button> -->
+                                    <button class="oe_stat_button btn-green" name="action_view_medical_checklist" string="Checklist" type="object" icon="fa-pencil-square-o" invisible="0">
+                                    </button>
+                                    <button class="oe_stat_button btn-green" name="action_view_medicine_history" string="Treatment History" type="object" icon="fa-user-md">
+                                        <field string="Treatment History" name="treatment_medicine_count" widget="statinfo"/>
+                                    </button>
+                                    <button class="oe_stat_button btn-green" name="action_view_transaction" string="Payment Transaction" type="object"  icon="fa-pencil-square-o"  attrs="{'invisible': ['|',('id','=',False),('transaction_count', '=', '0')]}">
+                                        <field string="Transactions" name="transaction_count" widget="statinfo"/>
+                                    </button>
+
+
+                                </div>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="name" class="oe_inline"/>
+                                </h1>
+                            </div>
+
+                            <group>
+                                <group>
+                                    <field name="patient_id"/>
+                                    <field name="patient_age" invisible="1"/>
+                                    <field name="is_editable" invisible="1"/>
+                                     <label for="physician_id" string="Prescriber"/>
+                                     <div class="oe_inline">
+                                        <field
+                                            name="physician_id"
+                                            attrs="{'readonly': [('is_editable', '=', False), ('is_locked','=',True)]}" class="oe_inline"
+                                        />
+                                         <span><field
+                                            name="physician_phone"
+                                            attrs="{'readonly': [('is_editable', '=', False), ('is_locked','=',True)]}" class="oe_inline"
+                                        /></span>
+                                         <span>
+                                              <button name="call_prescriber" icon="fa-phone" nolabel="1" string="Call" type="object" groups="acs_hms_base.group_hms_manager" class="oe_highlight oe_inline"/>
+                                         </span>
+                                    </div>
+                                     <field name="is_owner_prescriber" invisible="1"/>
+                                    <label for="nurse_id" string="Clinician"/>
+                                         <div class="oe_inline">
+                                            <field name="nurse_id" class="oe_inline"/>
+                                      </div>
+                                    <field name="prescription_type" invisible="1"/>
+                                    <field name="group_id" invisible="1" string="Prescription Template"/>
+                                    <field name="department_id" attrs="{'readonly': [('is_doctor_editable','=', True), ('state','in', ('prescription','request', 'finished','expired','cancel'))]}"/>
+        <!--                            domain="[('physician_id','=',physician_id),'|',('diseases_id','in',diseases_ids),('diseases_id','=',False)]"-->
+
+                                </group>
+                                <group>
+                                    <field name="diseases_ids" widget="many2many_tags" invisible="1"/>
+                                    <field name="is_doctor_editable" invisible="1"/>
+                                    <field name="is_locked" invisible="1"/>
+                                    <field name="expire_date" attrs="{'readonly': [('is_doctor_editable','=', True), ('state','in', ('prescription','request', 'finished','expired','cancel'))]}"/>
+                                    <field name="prescription_date" attrs="{'readonly': [('is_doctor_editable','=', True), ('state','in', ('prescription','request', 'finished','expired','cancel'))]}"/>
+<!--                                     <label for="is_prescriber_fee" string="Prescriber fee"/>-->
+<!--                                     <div class="oe_inline">-->
+<!--                                         <field name="is_prescriber_fee" attrs="{'readonly': [('is_doctor_editable','=', True), ('state','in', ('prescription','request', 'finished','expired','cancel'))]}"/>-->
+<!--                                         <span attrs="{'invisible': [('is_prescriber_fee', '=', False)], 'readonly': [('is_doctor_editable','=', True), ('state','in', ('prescription','request', 'finished','expired','cancel'))]}"><field name="prescriber_fee" class="oe_inline"/></span>-->
+<!--                                     </div>-->
+                                    <field name="alert_count" invisible="1"/>
+                                    <field name="pregnancy_warning" invisible="1"/>
+<!--                                     <div name='call_telehealth'>-->
+<!--                                        <a name="acs_apply_call_telehealth"-->
+<!--                                            class="btn btn-outline-primary" onclick="call_telehealth();">Call Prescriber</a>-->
+<!--                                    </div>-->
+                                </group>
+                            </group>
+                            <notebook>
+                                <page name="prescription_lines" string="Prescription Lines">
+                                    <group>
+                                        <group>
+                                            <label for="medicament_group_id" attrs="{'invisible': [('state','!=', 'draft')]}"/>
+                                            <div name="medicament_group_id" attrs="{'invisible': [('state','!=', 'draft')]}">
+                                                <field name="medicament_group_id" nolabel="1" widget="many2many_tags" options="{'no_create': True}"/>
+                                                <!-- <field name="acs_kit_qty" class="oe_inline" nolabel="1" attrs="{'invisible': [('acs_kit_id','=', False)]}"/> -->
+        <!--                                        <button name="get_acs_kit_lines" string="Add Kit Products" type="object" class="oe_inline fa fa-arrow-right oe_link" attrs="{'invisible': [('acs_kit_id','=', False)]}"/>-->
+                                            </div>
+                                        </group>
+        <!--                                <group>-->
+        <!--                                    <label for="old_prescription_id"/>-->
+        <!--                                    <div name='old_prescription_id'>-->
+        <!--                                        <field name="old_prescription_id" domain="[('patient_id','=',patient_id),('state','=','prescription')]" nolabel="1" options="{'no_create': True}"/>-->
+        <!--                                        <button name="get_prescription_lines" string="Get Lines" type="object" class="oe_inline fa fa-arrow-right oe_link" attrs="{'invisible': ['|',('old_prescription_id','=', False), ('state','!=', 'draft')]}"/>-->
+        <!--                                    </div>-->
+        <!--                                </group>-->
+                                    </group>
+                                    <field name="prescription_line_ids" nolabel="1" colspan="4" context="{'default_appointment_id': appointment_id}" widget="one2many_list" attrs="{'readonly': [('is_doctor_editable','=', True), ('state','in', ('prescription','request', 'finished','expired','cancel'))]}">
+                                        <tree string="Prescription Line" editable="bottom">
+                                            <control>
+                                                <create name="add_line_control" string="Add a line"/>
+<!--                                                <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>-->
+<!--                                                <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>-->
+                                            </control>
+                                            <field name="id" invisible="1"/>
+                                            <field name="display_type" invisible="1"/>
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="product_id" string="Medicine Name"/>
+                                            <field name="active_component_ids" widget="many2many_tags" invisible="1"/>
+                                            <field name="allow_substitution"  invisible="1"/>
+                                            <field name="common_dosage_id" invisible="1"/>
+                                            <field name="common_dosage_group" invisible="1"/>
+                                             <field name="medicine_area_id" options="{'always_reload': True}" optional="show"/>
+                                            <field name="medicine_amount" options="{'always_reload': True}" optional="show"/>
+                                             <field name="medicine_technique_id" options="{'always_reload': True}" optional="show"/>
+                                            <field name="medicine_depth_id" options="{'always_reload': True}" optional="show"/>
+                                            <field name="medicine_method_id" options="{'always_reload': True}" optional="show"/>
+                                            <field name="dose" attrs="{'required': [('display_type', '=', False)]}" string="Dose" invisible="1"/>
+                                            <field name="dosage_uom_id" optional="hide" groups="uom.group_uom"/>
+                                            <field name="repeat"/>
+                                            <field name="use" optional="show"/>
+                                            <field name="use_every" invisible="1"/>
+                                            <field name="product_uom_category_id" invisible="1"/>
+                                            <field name="qty_per_day" attrs="{'required': [('display_type', '=', False)]}"  invisible="1"/>
+                                            <!-- <field name="days" attrs="{'required': [('display_type', '=', False)]}"/> -->
+                                            <field name="manual_prescription_qty" invisible="1"/>
+                                            <field name="manual_quantity" invisible="1"/>
+                                            <field name="quantity" invisible="1" attrs="{'readonly': [('manual_prescription_qty', '=', False)], 'required': [('display_type', '=', False)]}" string="Total Qty" force_save="1"/>
+                                            <field name="is_red" string="Color" class="show-red" invisible="1"/>
+                                            <field name="qty_available" readonly="1" optional="show" decoration-danger="is_red == True"/>
+                                            <field name="colour_forecast" widget="color" nolabel="1" optional="show"/>
+                                            <field name="is_pbs" optional="show" invisible="0" groups="acs_hms.group_hms_doctor_clinic, acs_hms.group_hms_doctor"/>
+                                            <field name="prnt" invisible="1"/>
+                                            <field name="short_comment" invisible="1"/>
+                                            <field name="treatment_id" invisible="1"/>
+                                            <field name="name" invisible="1" string="Comment" widget="section_and_note_text" optional="show"/>
+                                        </tree>
+                                    </field>
+                                    <group colspan="4">
+                                        <field name="advice_id" invisible="0" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('is_doctor_editable','=', True), ('state','in', ('prescription','finished','expired','cancel'))]}"/>
+                                        <field name="notes" string="Advice" colspan="2" attrs="{'readonly': [('is_doctor_editable','=', True), ('state','in', ('prescription','finished','expired','cancel'))]}"/>
+                                    </group>
+                                </page>
+<!--                                <page name="medical_checklist" string="Medical Checklist">-->
+<!--                                    <field name="survey_answer_ids" widget="one2many_list">-->
+<!--                                  <tree decoration-muted="skipped == True">-->
+<!--                                    <field name="question_sequence" invisible="1"/>-->
+<!--                                    <field name="create_date" optional="hidden"/>-->
+<!--                                    <field name="page_id" optional="hidden"/>-->
+<!--                                    <field name="question_id"/>-->
+<!--                                    <field name="answer_type" optional="hidden"/>-->
+<!--                                    <field name="skipped" optional="hidden"/>-->
+<!--                                    <field name="matrix_row_id" string="Row answer"/>-->
+<!--                                      <field name="suggested_answer_yes"/>-->
+<!--                                      <field name="suggested_answer_no"/>-->
+<!--                                    <field name="answer_is_correct" optional="hidden"/>-->
+<!--                                    <field name="answer_score" sum="Score" optional="hidden"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                                </page>-->
+                                <page name="prescription_details" string="Prescription Details" invisible="1">
+                                    <field name="prescription_detail_ids" nolabel="1" colspan="4">
+                                        <tree string="Prescription Detail" editable="bottom">
+                                            <control>
+                                                <create name="add_line_control" string="Add a line"/>
+                                            </control>
+                                            <field name="id" invisible="1"/>
+                                            <field name="prescription_id" invisible="1"/>
+                                            <field name="line_id" invisible="1"/>
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="product_id" attrs="{'readonly':[('parent.state', '!=', 'draft')] }" string="Medicine Name"/>
+                                            <field name="description" />
+                                            <field name="scheduled_date" />
+                                            <field name="state" />
+                                            <field name="is_done" readonly="1" />
+                                            <field name="done_at" readonly="1" />
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page name="info" string="General Information" invisible="1">
+                                    <group>
+                                        <group>
+                                            <field name="appointment_id" domain="[('patient_id','=',patient_id)]"/>
+                                        </group>
+                                        <group>
+                                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                            <field name="treatment_id" domain="[('patient_id','=',patient_id)]"/>
+                                        </group>
+                                    </group>
+                                </page>
+                            </notebook>
+                    </div>
+                                    </sheet>
+
+                                </form>
+
+                            </field>
+                        </page>
+
+                        <page name="prescription_line_repeat_ids" string="Remaining Prescription" invisible="1">
+                            <field name="prescription_line_repeat_ids" invisible="1"> 
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="repeat"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page name="info" string="General Information" invisible="1">
+                            <group>
+                                <group>
+                                    <field name="cabin_id"/>
+                                    <field name="medicine_ids" widget="many2many_tags" groups="acs_hms_base.group_hms_manager"/>
+                                    <field name="diseases_ids" widget="many2many_tags" groups="acs_hms_base.group_hms_manager" invisible="1"/>
+                                    <field name="responsible_id" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="urgency"/>
+                                    <field name="purpose_id"/>
+                                    <field name="outside_appointment" invisible="1"/>
+                                    <field name="location" widget="url" invisible="1" attrs="{'invisible': [('outside_appointment','=',False)]}"/>
+                                    <field name="is_video_call" invisible="1"/>
+                                </group>
+                            </group>
+
+                            <separator string="Cancellation" name="acs_cancel_reason" attrs="{'invisible': [('state','!=','cancel')]}"/>
+                            <group>
+                                <field name="cancel_reason_id" attrs="{'invisible': [('state','!=','cancel')]}"/>
+                            </group>
+                            <field name="cancel_reason" placeholder="Cancellation Reason..." attrs="{'invisible': [('state','!=','cancel')]}"/>
+                        </page>
+                        <page name="clinical_ass" string="Clinical Assesment" groups="acs_hms_base.group_hms_manager" attrs="{'invisible': [('state','=','draft')]}" invisible="1">
+                            <div>NOTE: Details are shown based on Patient Evaluation.
+                                <t attrs="{'invisible': [('evaluation_id','=',False)]}">Last Evaluation: <field name="evaluation_id" nolabel="1" class="oe_link"/></t>
+                                <t attrs="{'invisible': [('evaluation_id','!=',False)]}"><button name="action_create_evaluation" type="object" string="Create Evaluation" class=" oe_link"/></t>
+                            </div>
+                            <group>
+                                <group>
+                                    <label for="weight"/>
+                                    <div class="o_row">
+                                        <field name="weight"/>
+                                        <field name="acs_weight_name"/>
+                                    </div>
+                                    <label for="height"/>
+                                    <div class="o_row">
+                                        <field name="height"/>
+                                        <field name="acs_height_name"/>
+                                    </div>
+                                    <label for="temp"/>
+                                    <div class="o_row">
+                                        <field name="temp"/>
+                                        <field name="acs_temp_name"/>
+                                    </div>
+                                    <field name="hr"/>
+                                </group>
+                                <group>
+                                    <field name="rr"/>
+                                    <label string="Systolic/Diastolic BP" for="systolic_bp"/>
+                                    <div name="systolic_bp">
+                                        <div class="oe_inline" style="display: inline;" >
+                                            <field name="systolic_bp" class="oe_inline"/>/<field name="diastolic_bp" class="oe_inline"/>
+                                        </div>
+                                    </div>
+                                    <label for="spo2"/>
+                                    <div class="o_row">
+                                        <field name="spo2"/>
+                                        <field name="acs_spo2_name"/>
+                                    </div>
+                                    <label for="rbs"/>
+                                    <div class="o_row">
+                                        <field name="rbs"/>
+                                        <field name="acs_rbs_name"/>
+                                    </div>
+                                </group>
+                                <group>
+                                    <field name="bmi"/>
+                                </group>
+                                <group>
+                                    <field name="bmi_state"/>
+                                </group>
+                                <separator string="Pain Level"/>
+                                <group>
+                                    <group>
+                                        <label for="pain_level"/>
+                                        <div class="o_row">
+                                            <field name="pain_level"/>
+                                            <span><button name="%(action_acs_pain_level)d" type="action" icon="fa-question-circle" title="Pain Level"/></span>
+                                        </div>
+                                        <field name="pain" colspan="2" nolabel="1"/>
+                                    </group>
+                                </group>
+                            </group>
+                            <separator string="Laboratory"/>
+                            <field name="lab_report" placeholder="Laboratory Report..."/>
+                            <separator string="Radiological"/>
+                            <field name="radiological_report" placeholder="Radiological Report..."/>
+                        </page>
+                        <page name="advice" string="D/D &amp; Advice" groups="acs_hms_base.group_hms_manager,acs_hms_base.group_hms_manager" attrs="{'invisible': [('state','=','draft')]}" invisible="1">
+                            <separator string="Differential Diagnosis"/>
+                            <field name="differencial_diagnosis" placeholder="Differential Diagnosis..."/>
+                            <separator string="Medical Advice"/>
+                            <field name="medical_advice" placeholder="Medical Advice..."/>
+                        </page>
+                        <page name='diseases' string="Disease History" groups="acs_hms_base.group_hms_manager" attrs="{'invisible': [('state','=','draft')]}" invisible="1">
+                            <separator string="Past Medical History"/>
+                            <field name="medical_history"/>
+                            <separator string="Diseases History"/>
+                            <field name="patient_diseases_ids"/>
+                        </page>
+                         <page name="consumed_products" string="Products/Services" groups="acs_hms_base.group_hms_manager,acs_hms_base.group_hms_manager" attrs="{'invisible': [('state','=','draft')]}">
+                            <label for="acs_kit_id" attrs="{'invisible': [('state','in', ['done','cancel'])]}"/>
+                            <div name="acs_kit_id" attrs="{'invisible': [('state','in', ['done','cancel'])]}">
+                                <field name="acs_kit_id" nolabel="1" options="{'no_create': True}"/>
+                                <field name="acs_kit_qty" class="oe_inline" nolabel="1" attrs="{'invisible': [('acs_kit_id','=', False)]}"/>
+                                <button name="get_acs_kit_lines" string="Add Template" type="object" class="oe_inline fa fa-arrow-right oe_link" attrs="{'invisible': [('acs_kit_id','=', False)]}"/>
+                            </div>
+                            <field name="pricelist_id" invisible="1"/>
+                            <field name="consumable_line_ids" nolabel="1" colspan="4" context="{'default_patient_id': patient_id, 'default_department_id': department_id, 'default_physician_id': physician_id, 'default_pricelist_id': pricelist_id}">
+                                <tree string="Line" editable="top">
+                                    <field name="product_id" expand="1" required="1"/>
+                                    <field name="product_uom_id" required="1" groups="uom.group_uom"/>
+                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="qty" required="1"/>
+                                    <field name="tracking" invisible="1"/>
+                                    <field name="lot_id" context="{'acs_product_id': product_id}" options="{'no_create': True}" attrs="{'readonly': [('tracking','=','none')], 'required': [('tracking','!=','none')]}"/>
+                                    <field name="price_unit" readonly="1" force_save="1"/>
+                                    <field name="subtotal" readonly="1" sum="Total" optional="show"/>
+                                    <field name="date" required="1"/>
+                                    <field name="note"/>
+                                    <field name="pricelist_id" invisible="1"/>
+                                    <field name="move_id" invisible="1"/>
+                                    <field name="physician_id" invisible="1"/>
+                                    <field name="department_id" invisible="1"/>
+                                    <field name="patient_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page> 
+                        <!-- <page name="photos" string="Photos">
+                          <group name="extra_info">
+                                <group>
+                                    <field name="attachment_before_ids" widget="many2many_binary"/>
+                                </group>
+                                <group>
+                                    <field name="attachment_after_ids" widget="many2many_binary"/>
+
+                                </group>
+                            </group>
+                        </page> -->
+
+                        <page name="treatment_ids" string="Treatments">
+                            <button name="%(acs_hms.act_open_treatment_form)d"
+                                class="oe_highlight" string="Add a treatment" type="action" 
+                                context="{
+                                    'default_appointment_id': id,
+                                    'default_patient_id': patient_id,
+                                    'default_nurse_id': nurse_id,
+                                    'from_appointment': True}"/>
+                            <field name="treatment_ids" context="{
+                                    'default_appointment_id': id,
+                                    'default_patient_id': patient_id,
+                                    'default_nurse_id': nurse_id,
+                                    'hide_header': True,
+                                    'from_appointment': True,
+                                    'target':'current'}"
+                                    >
+                                <tree create="0">
+                                    <!-- <control>
+                                        <create string="Add a treatment"/>
+                                    </control> -->
+                                    <field name="name"/>
+                                    <field name="finding" invisible="1"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                          
+                        <page name="aftercare" string="Aftercare">
+                             <button name="%(acs_hms.multiple_aftercare_action)d"
+                             class="oe_highlight" string="Select Multiple Aftercare" type="action"/>
+                            <field name="aftercare_ids" context="{'default_patient_id': patient_id}">
+                                <tree editable="bottom">
+                                    <field name="appointment_id" invisible="1" context="{'default_appointment_id': active_id}"/>
+                                    <field name="knowledge_id" required="1"/>
+                                    <field name="name"/>
+                                    <button name="button_send_email"
+                                            type="object"
+                                            class="btn btn-secondary fa fa-envelope-o"
+                                            aria-label="Send Aftercare"
+                                            data-tooltip="Send Aftercare"/>
+                                    <button name="action_open_form"
+                                            type="object"
+                                            class="btn btn-secondary fa fa-arrow-right"
+                                            aria-label="Internal link"
+                                            data-tooltip="Internal link"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page name="other_info" string="Other Information" groups="acs_hms_base.group_hms_manager" invisible="1">
+                            <group name="extra_info">
+                                <group>
+                                    <field name="waiting_duration_timer" widget="AcsTimer" attrs="{'invisible': [('state','!=','waiting')]}" options="{'widget_start_field': 'waiting_date_start', 'widget_stop_field': 'waiting_date_end', 'duration_field': 'waiting_duration_timer'}"/>
+                                    <field name="waiting_duration" attrs="{'invisible': [('state','=','waiting')]}" widget="float_time" invisible="1"/>
+                                    <field name="pause_duration" widget="float_time" attrs="{'invisible': [('pause_duration','=',0)]}"/>
+                                </group>
+                                <group>
+                                    <field name="appointment_duration_timer" widget="AcsTimer" attrs="{'invisible': [('state','!=','in_consultation')]}" options="{'widget_start_field': 'date_start', 'widget_stop_field': 'date_end', 'duration_field': 'appointment_duration_timer'}"/>
+                                    <field name="appointment_duration" widget="float_time" attrs="{'invisible': [('state','=','in_consultation')]}" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="treatment_id" domain="[('patient_id','=', patient_id)]" context="{'default_patient_id': patient_id, 'default_department_id': department_id, 'default_physician_id': physician_id}"/>
+                                    <field name="ref_physician_id"/>
+                                    <label for="invoice_exempt"/>
+                                    <div name='invoice_exemption'>
+                                        <field name='invoice_exempt' class="oe_inline" nolabel="1"/>
+                                        <button name="acs_apply_invoice_exemption" string="Apply/Remove" type="object" class="oe_inline fa fa-arrow-right oe_link" attrs="{'invisible': [('invoice_id','!=', False)]}" groups="acs_hms_base.group_hms_manager"/>
+                                    </div>
+                                    <field name="refer_reason" invisible="1"/>
+                                    <field name="refered_from_appointment_id" attrs="{'invisible': [('refered_from_appointment_id','=',False)]}" readonly="1" force_save="1"/>
+                                    <field name="refered_from_physician_id" attrs="{'invisible': [('refered_from_appointment_id','=',False)]}"/>
+                                    <field name="refered_from_reason" attrs="{'invisible': [('refered_from_appointment_id','=',False)]}"/>
+                                    <field name="refered_to_appointment_id" attrs="{'invisible': [('refered_to_appointment_id','=',False)]}" readonly="1" force_save="1"/>
+                                    <field name="refered_to_physician_id" attrs="{'invisible': [('refered_to_appointment_id','=',False)]}"/>
+                                </group>
+                                <group>
+                                    <field name="pricelist_id" groups="product.group_product_pricelist" options="{'no_open':True,'no_create': True}" invisible="1"/>
+                                    <field name="user_id" widget="many2one_avatar_user" invisible="1"/>
+                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+                    <group colspan="4">
+                        <a>Notes</a>
+                        <field colspan="2" name="notes" nolabel="1" placeholder="Notes..."/>
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+<record id="view_hms_appointment_search" model="ir.ui.view">
+    <field name="name">Appointment Search</field>
+    <field name="model">hms.appointment</field>
+    <field name="arch" type="xml">
+        <search string="Search Appointments">
+            <field name="name"/>
+            <field name="patient_id"/>
+            <field name="physician_id"/>
+            <field name="purpose_id"/>
+            <field name="cabin_id"/>
+            <field name="treatment_id"/>
+            <field name="department_id" groups="acs_hms.group_allow_multi_department"/>
+            <field name="ref_physician_id"/>
+            <filter name="today" string="Today" domain="[('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+            <filter name="my_app" string="My Appointments" domain="[('physician_id.user_id', '=',uid)]" invisible="1"/>
+            <filter name="urgency" string="Urgent Appointment" domain="[('urgency','=','urgent')]" invisible="1"/>
+            <filter name="urgency" string="Medical Emergency" domain="[('urgency','=','medical_emergency')]" invisible="1"/>
+            <filter name="consultation" string="Consultation Appointment" domain="[('consultation_type','=','consultation')]" invisible="1"/>
+            <filter name="consultation" string="Followup Appointment" domain="[('consultation_type','=','followup')]" invisible="1"/>
+            <separator/>
+            <filter name="done" string="Not Done" domain="[('state','not in',('done','cancel'))]"/>
+            <group expand="0" string="Group By...">
+                <filter string="Patient" name="patient_groupby" domain="[]" context="{'group_by':'patient_id'}"/>
+                <filter string="Physician" name="physician_groupby" domain="[]" context="{'group_by':'physician_id'}" />
+                <filter string="Date" name="date_groupby" domain="[]" context="{'group_by':'date'}" />
+                <filter string="State" name="state_groupby" domain="[]" context="{'group_by':'state'}"/>
+                <filter string="Purpose" name="purpose_groupby" domain="[]" context="{'group_by':'purpose_id'}" />
+                <filter string="Department" name="department_groupby" domain="[]" context="{'group_by':'department_id'}" />
+                <filter string="Referring Prescriber" name="ref_physician_groupby" domain="[]" context="{'group_by':'ref_physician_id'}" />
+            </group>
+        </search>
+    </field>
+</record>
+
+<record id="view_acs_appointment_calendar" model="ir.ui.view">
+    <field name="name">hms.appointment.calendar</field>
+    <field name="model">hms.appointment</field>
+    <field name="type">calendar</field>
+    <field name="arch" type="xml">
+        <calendar string="Appointments" color="state" date_start="date" quick_add="False" date_stop="date_to" delete="0">
+            <field name="patient_id" readonly="1"/>
+            <field name="age" readonly="1"/>
+            <field name="state" filters="1" readonly="1"/>
+            <field name="procedure_ids" string="Treatment" readonly="1"/>
+            <field name="consultation_type" readonly="1"/>
+            <field name="is_confirmed_consent" readonly="1"/>
+        </calendar>
+    </field>
+</record>
+
+
+    <record id="view_appointment_pivot" model="ir.ui.view">
+        <field name="name">hms.appointment.pivot</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <pivot string="Appointments">
+                <field name="date" type="row"/>
+                <field name="physician_id" type="row"/>
+                <field name="patient_id" type="row"/>
+                <field name="waiting_duration" type="measure"/>
+                <field name="appointment_duration" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_appointment_graph" model="ir.ui.view">
+        <field name="name">hms.appointment.graph</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <graph string="Appointments" type="line">
+                 <field name="physician_id"/>
+                 <field name="appointment_duration" type="measure"/>
+             </graph>
+        </field>
+    </record>
+
+    <record id="view_appointment_activity" model="ir.ui.view">
+        <field name="name">hms.appointment.activity</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <activity string="Appointments">
+                <templates>
+                    <div t-name="activity-box">
+                        <div>
+                            <field name="name" display="full"/>
+                            <field name="patient_id" muted="1" display="full"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <record id="action_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">hms.appointment</field>
+        <field name="view_id" ref="view_acs_appointment_calendar"/>
+        <field name="view_mode">calendar,tree</field>
+        <field name="context"></field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add an Appointment.
+            </p>
+        </field>
+    </record>
+    <record id="view_checklist_hms_appointment_tree" model="ir.ui.view">
+        <field name="name">hms.appointment.checklist.tree</field>
+        <field name="model">hms.appointment</field>
+        <field name="arch" type="xml">
+            <tree expand="1" create="0" edit="0" delete="0" decoration-info="state=='draft'" decoration-muted="state=='cancel'" decoration-danger="state=='waiting'" name="appointment_tree">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="department_id"/>
+                <field name="date" invisible="1"/>
+                <field name="survey_id" invisible="1"/>
+                <field name="is_done_survey" invisible="1"/>
+                <field name="state" invisible="0" optional="show" decoration-info="state=='draft'" decoration-muted="state=='cancel'" decoration-danger="state=='waiting'" decoration-success="state=='done'" decoration-primary="state=='in_consultation'" decoration-warning="state=='to_invoice'" decoration-it="state=='pause'" widget="badge"/>
+                <button string="Start Medical Checklist" name="action_start_survey" type="object" attrs="{'invisible':[('survey_id','=',False),('is_done_survey','=',True)]}" class="oe_link pb-1" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+     <record id="action_checklist_appointment" model="ir.actions.act_window">
+        <field name="name">Medical Checklist</field>
+        <field name="res_model">hms.appointment</field>
+        <field name="view_id" ref="view_checklist_hms_appointment_tree"/>
+         <field name="search_view_id" ref="view_hms_appointment_search"/>
+        <field name="view_mode">tree</field>
+          <field name="domain">[('is_done_survey','=',False),('state', '=', 'confirm_consent')]</field>
+         <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+        </field>
+    </record>
+</odoo>

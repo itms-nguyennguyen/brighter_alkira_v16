@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="GeminateImageField" t-inherit="web.ImageField" t-inherit-mode="extension" owl="1">
+        <xpath expr="//button[hasclass('o_select_file_button')]" position="after">
+                <button
+                    class="o_edit_file_button btn btn-light border-0 rounded-circle m-1 p-1"
+                    data-tooltip="Edit Image"
+                    t-on-click="onFileEdit"
+                    aria-label="Edit Image">
+                    <i class="fa fa-paint-brush fa-fw"/>
+                </button>
+        </xpath>
+    </t>
+</templates>

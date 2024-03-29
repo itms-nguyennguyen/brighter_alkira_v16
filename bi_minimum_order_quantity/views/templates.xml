@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="product_quantity_min_qty" inherit_id="website_sale.product_quantity" customize_show="True" name="Select Quantity">
+     	<xpath expr="//input[@name='add_qty']" position="replace">
+	        <input type="text" class="form-control quantity text-center" data-min="1" name="add_qty" t-att-value="product.min_qty or 1"/>
+	     </xpath>
+        
+
+    </template>
+    <template id="product_quantity_hidden_" inherit_id="website_sale.product" name="Hidden Quantity">
+        <xpath expr="//div[@id='add_to_cart_wrap']" position="before">
+            <input type="hidden" class="form-control" name="min_qty" t-att-value="product.min_qty or 1"/>
+        </xpath>
+    </template>
+
+    <template id="cart_lines_min_qty" inherit_id="website_sale.cart_lines" customize_show="True" name="Select Quantity">
+     	<xpath expr="//div[hasclass('css_quantity')]" position="after">
+        	<input type="hidden" id="min_qty_" t-attf-class="min_qty_#{line.id}" name="min_qty" t-att-value="line.product_id.min_qty or 1"/>
+        </xpath>
+    </template>
+
+</odoo>

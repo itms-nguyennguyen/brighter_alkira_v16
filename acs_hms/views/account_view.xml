@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_move_form" model="ir.ui.view"> 
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="acs_hms_base.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="physician_id" position="after">
+                <field name="ref_physician_id"/>
+            </field>
+
+            <group name="general_details" position="after">
+                <group name='appointment' string="Appointment Details">
+                    <field name="appointment_id"/>
+                    <field name="procedure_id"/>
+                </group>
+            </group>
+        </field>      
+    </record>
+
+    <record id="view_account_analytic_line_inherit_tree" model="ir.ui.view">
+        <field name="name">account.analytic.line.inherit.tree</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+        <field name="arch" type="xml">
+             <field name="task_id" position="after">
+                <field name="location"/>
+                <field name="certification_expiry" invisible="1"/>
+                <field name="description" string="Description &amp; reflection" class="acs_col2"/>
+            </field>
+            <field name="date" position="before">
+                <field name="name" string="Title"/>
+                <field name="channel_id" string="Course"/>
+                <field name="user_id" readonly="1" invisible="1"/>
+            </field>
+            <field name="project_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+             </field>
+             <field name="employee_id" position="attributes">
+                 <attribute name="invisible">0</attribute>
+                 <attribute name="groups">hr_timesheet.group_timesheet_manager</attribute>
+             </field>
+            <field name="employee_id" position="after">
+                <field name="department_id" groups="hr_timesheet.group_timesheet_manager"/>
+            </field>
+            <field name="unit_amount" position="attributes">
+                 <attribute name="invisible">1</attribute>
+             </field>
+
+             <field name="date" position="after">
+                 <field name="unit_amount" optional="show" widget="timesheet_uom" sum="Total" decoration-danger="unit_amount &gt; 24 or unit_amount &lt; 0"/>
+             </field>
+
+        </field>
+    </record>
+
+     <record id="hr_timesheet.act_hr_timesheet_line" model="ir.actions.act_window">
+         <field name="name">CDP</field>
+     </record>
+
+      <menuitem id="hr_timesheet.menu_hr_time_tracking"
+            name="CPD Log" action="hr_timesheet.act_hr_timesheet_line"
+            parent="hr_timesheet.timesheet_menu_root"
+            groups = "hr_timesheet.group_hr_timesheet_approver"
+            sequence="9"/>
+
+     <menuitem id="hr_timesheet.timesheet_menu_root"
+            name="CPD Log"
+            sequence="12"
+            groups="hr_timesheet.group_hr_timesheet_user"
+            web_icon="acs_hms,static/src/img/timesheet.png"/>
+
+</odoo>

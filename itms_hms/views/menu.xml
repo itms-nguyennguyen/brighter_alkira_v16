@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <menuitem id="website_slides.website_slides_menu_root" name="eLearning" sequence="11" web_icon="itms_hms,static/description/elearning.png"/>
+     <menuitem id="point_of_sale.menu_point_root" name="POS" sequence="14" web_icon="itms_hms,static/description/pos.png"/>
+     <menuitem id="stock.menu_stock_root" sequence="800" name="Inventory" web_icon="itms_hms,static/description/stock.png"/>
+<!--     <menuitem action="stock.action_production_lot_form" id="stock.menu_action_production_lot_form" name="Stock on Hand" groups="stock.group_production_lot" web_icon="itms_hms,static/description/onhand.png" sequence="15"/>-->
+      <menuitem name="Contacts" id="contacts.menu_contacts" sequence="200"/>
+</odoo>

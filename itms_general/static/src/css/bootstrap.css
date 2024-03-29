@@ -1,0 +1,28 @@
+.btn-orange.btn-light {
+    border-bottom-color: #f3a435 !important;
+    border-bottom-width: thick !important;
+}
+.btn-green.btn-light {
+    border-bottom-color: #4dfe4a !important;
+    border-bottom-width: thick !important;
+}
+.btn-blue.btn-light {
+    border-bottom-color: #2492f9 !important;
+    border-bottom-width: thick !important;
+}
+.btn-yellow.btn-light {
+    border-bottom-color: #f7fb23 !important;
+    border-bottom-width: thick !important;
+}
+.btn-black.btn-light {
+    border-bottom-color: black !important;
+    border-bottom-width: thick !important;
+}
+.btn-gray.btn-light {
+    border-bottom-color: #d9d3d3 !important;
+    border-bottom-width: thick !important;
+}
+.btn-purple.btn-light {
+    border-bottom-color: palevioletred !important;
+    border-bottom-width: thick !important;
+}

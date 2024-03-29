@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="email_patient_consent_form" model="mail.template">
+            <field name="name">Consent Form</field>
+            <field name="model_id" ref="itms_consent_form.model_consent_consent"></field>
+            <field name="auto_delete" eval="False"/>
+            <field name="description">Consent Form</field>
+            <field name="email_from">{{ (object.nurse_id.email or user.email_formatted or object.user_id.login) }}</field>
+            <field name="email_to">{{ (object.patient_id.email) }}</field>
+            <field name="subject">Accept and Sign for {{ object.name }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <t t-out="object.patient_id.name"></t>,</p>
+                    <p></p>
+                    <p>In preparation for your upcoming appointment, we kindly request that you click on the following link to access and electronically sign our consent form</p>
+                    <div style="padding: 16px 0px 16px 0px;">
+                        <a t-att-href="ctx.get('sign_url')"
+                            target="_blank"
+                            style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;"><t t-out="object.name"></t></a>
+                    </div>
+                    <br/>
+                    <p>Kind regards,</p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

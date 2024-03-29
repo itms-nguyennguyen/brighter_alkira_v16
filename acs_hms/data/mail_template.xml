@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="acs_appointment_email" model="mail.template">
+            <field name="name">Appointment Creation</field>
+            <field name="email_from">{{  user.email }}</field>
+            <field name="email_to">{{ object.patient_id.email }}</field>
+            <field name="subject">{{ object.patient_id.name }} Your Appointment has been scheduled</field>
+            <field name="model_id" ref="acs_hms.model_hms_appointment"/>
+<!--            <field name="report_template" ref="acs_hms.action_appointment_report"/>-->
+<!--            <field name="report_name">{{ (object.name or '').replace('/','_') }}</field>-->
+            <field name="lang">{{ object.patient_id.lang }}</field>
+             <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+<div style="margin:auto;background: #FFFFFF;color:#777777">
+    <t t-set="appointment_date" t-value="format_datetime(dt=object.date, tz=object.physician_id.tz or 'UTC', lang_code=object.physician_id.lang)"/>
+    <p>Dear <t t-out="object.patient_id.name"/>, Thankyou for booking and appointment with us.</p>
+    <p>Your Appointment has been scheduled with following details.</p>
+    <ul> 
+        <li>
+            <p>Treatment: <t t-out="ctx.get('treatment')"/></p>
+        </li>
+        <li>
+            <p>Reference Number: <t t-out="object.name"/></p>
+        </li>
+        <li>
+            <p>Clinician Name: <t t-out="object.department_id.name"/></p>
+        </li>
+         <li>
+            <p>Address: <t t-out="object.nurse_id.partner_id.street"/>, <t t-out="object.nurse_id.partner_id.city"/>, <t t-out="object.nurse_id.partner_id.state_id.code or ''"/>, <t t-out="object.nurse_id.partner_id.zip"/>, <t t-out="object.nurse_id.partner_id.country_id.code or ''"/></p>
+        </li>
+        <li>
+            <p>Date &amp; Time: <t t-out="appointment_date or ''"/></p>
+        </li>
+    </ul>
+    <p>We look forward to seeing you. If you need to reschedule, please contact us on <t t-out=" object.nurse_id.partner_id.phone or ''"/>.</p>
+    <p>Best regards.</p><br/>
+</div>
+                
+            </field>
+        </record>
+
+        <record id="acs_prescription_email" model="mail.template">
+            <field name="name">Prescription Creation</field>
+            <field name="email_from">{{ user.email }}</field>
+            <field name="email_to">{{ object.patient_id.email }}</field>
+            <field name="subject">{{ object.patient_id.name }} Your Prescription</field>
+            <field name="model_id" ref="acs_hms.model_prescription_order"/>
+            <field name="report_template" ref="acs_hms.report_hms_prescription_id"/>
+            <field name="report_name">{{ 'prescription_'+ (object.name or '').replace('/','_') }}</field>
+            <field name="lang">{{ object.patient_id.lang }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+<div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+    <p>Hello <t t-out="object.patient_id.name"/>,</p>
+    <p>Your Prescription details. For more details please refer attached PDF report.</p>
+    <ul>
+        <li>
+            <p>Reference Number: <t t-out="object.name"/></p>
+        </li>
+        <li t-if="object.appointment_id">
+            <p>Appointment ID: <t t-out="object.appointment_id.name"/></p>
+        </li>
+        <li t-if="object.physician_id">
+            <p>Physician Name: <t t-out="object.physician_id.name"/></p>
+        </li>
+        <li>
+            <p>Prescription Date: <t t-out="object.prescription_date"/></p>
+        </li>
+    </ul>
+    <p>Please feel free to call anytime for further information or any query.</p>
+
+    <p>Best regards.</p><br/>
+</div>
+  
+            </field>
+        </record>
+
+         <record id="acs_prescription_approve_request_email" model="mail.template">
+            <field name="name">Prescription Updated</field>
+            <field name="email_from">{{ user.email }}</field>
+            <field name="email_to">{{ object.nurse_id.email }}</field>
+            <field name="subject">{{ object.nurse_id.name }} Your Prescription Updated</field>
+            <field name="model_id" ref="acs_hms.model_prescription_order"/>
+<!--            <field name="report_template" ref="acs_hms.report_hms_prescription_id"/>-->
+<!--            <field name="report_name">{{ 'prescription_'+ (object.name or '').replace('/','_') }}</field>-->
+            <field name="lang">{{ object.nurse_id.lang }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="padding:0px;width:600px;margin:auto;background: #FFFFFF repeat top /100%;color:#777777">
+                    <p>Hello <t t-out="object.nurse_id.name"/>,</p>
+                    <p>Your Prescription details:</p>
+                    <ul>
+                        <li>
+                            <p>Reference Number: <t t-out="object.name"/></p>
+                        </li>
+                        <li t-if="object.appointment_id">
+                            <p>Appointment ID: <t t-out="object.appointment_id.name"/></p>
+                        </li>
+                        <li t-if="object.physician_id">
+                            <p>Prescriber Name: <t t-out="object.physician_id.name"/></p>
+                        </li>
+                        <li>
+                            <p>Prescription Date: <t t-out="object.prescription_date"/></p>
+                        </li>
+                        <li>
+                              <table class="table table-sm o_main_table mt16 acs_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Medicine Name</th>
+                                            <th>Area</th>
+                                            <th>Technique</th>
+                                            <th>Depth</th>
+                                            <th>Method</th>
+                                            <th>Dose</th>
+                                            <th>Repeat</th>
+                                            <th>Expiration</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="object.prescription_line_ids" t-as="line">
+                                            <tr>
+                                                <td>
+                                                    <span t-out="line.product_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <span t-out="line.medicine_area"/>
+                                                </td>
+                                                <td>
+                                                    <span t-out="line.medicine_technique"/>
+                                                </td>
+                                                <td>
+                                                    <span t-out="line.medicine_depth"/>
+                                                </td>
+                                                 <td>
+                                                    <span t-out="line.medicine_method"/>
+                                                </td>
+                                                <td>
+                                                    <span t-out="line.dose"/>
+                                                </td>
+                                                <td>
+                                                    <span t-out="line.repeat"/>
+                                                </td>
+                                                <td>
+                                                    <span t-out="line.use"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                              </table>
+                        </li>
+                    </ul>
+                    <p>Please feel free to call anytime for further information or any query.</p>
+
+                    <p>Best regards.</p><br/>
+                </div>
+
+            </field>
+        </record>
+
+         <record id="appointment_consent_form_email" model="mail.template">
+            <field name="name">Consent Form ITMS</field>
+            <field name="model_id" ref="acs_hms.model_hms_appointment"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="description">Consent Form</field>
+            <field name="lang">{{ object.patient_id.lang }}</field>
+           <field name="email_from">{{ (object.nurse_id.email or user.email_formatted or object.user_id.login) }}</field>
+            <field name="email_to">{{ (object.patient_id.email) }}</field>
+            <field name="subject">Accept and Sign for {{ object.name }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <t t-out="object.patient_id.name"></t>,</p>
+                    <p></p>
+                    <p>In preparation for your upcoming appointment, we kindly request that you click on the following link to access and electronically sign our consent form</p>
+                        <div style="padding: 16px 0px 16px 0px;">
+                            <t t-foreach="object.consent_ids" t-as="consent_id">
+                                <a t-att-href="consent_id.get_portal_url()"
+                                    target="_blank"
+                                    style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;"><t t-out="consent_id.name"></t></a>
+
+                            </t>
+                        </div>
+                    <br/>
+                    <p>Kind regards,</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="consent_appointment_form_email" model="mail.template">
+            <field name="name">Consent Form ITMS</field>
+            <field name="model_id" ref="acs_hms.model_hms_appointment"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="description">Consent Form</field>
+            <field name="lang">{{ object.patient_id.lang }}</field>
+           <field name="email_from">{{ (object.nurse_id.email or user.email_formatted or object.user_id.login) }}</field>
+            <field name="email_to">{{ (object.patient_id.email) }}</field>
+            <field name="subject">Accept and Sign for {{ object.name }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <t t-out="object.patient_id.name"></t>,</p>
+                    <p></p>
+                    <p>In preparation for your upcoming appointment, we kindly request that you click on the following link to access and electronically sign our consent form</p>
+                        <div style="padding: 16px 0px 16px 0px;">
+                              <a t-att-href="ctx.get('itms_consent_id').get_portal_url()"
+                                    target="_blank"
+                                    style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;"><t t-out="ctx.get('itms_consent_id').name"></t></a>
+                        </div>
+                    <br/>
+                    <p>Kind regards,</p>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_prescription_reminder" model="mail.template">
+            <field name="name">Prescription Reminder</field>
+            <field name="model_id" ref="acs_hms.model_prescription_detail"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="description">Prescription Reminder</field>
+            <field name="email_from">{}</field>
+            <field name="email_to">{{ (object.prescription_id.patient_id.email_formatted) }}</field>
+            <field name="subject">Reminder</field>
+            <field name="lang">{{ object.prescription_id.patient_id.lang }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <t t-out="object.prescription_id.patient_id.name"></t>,</p>
+                    <p></p>
+                    <p>This is a friendly reminder that you have a prescribed medication scheduled in a few days, details:
+                    <br/><br/>
+                    <t t-set="ids" t-value="(ctx.get('lines'))"/>
+                    <t t-set="records" t-value="object.sudo().browse(list(ids))"/>
+                    <t t-foreach="records" t-as="line">
+                        <t t-if="line and line.product_id">
+                            <t t-out="line.product_id.display_name"/><br/>
+                        </t>
+                    </t>
+                    <br/>
+                    To ensure your continued care, we recommend scheduling an appointment with your healthcare provider.
+
+                    Please feel free to contact us if you have any questions or need assistance.
+                    </p>
+                    <p>Kind regards,</p>
+                </div>
+            </field>
+        </record>
+
+
+        <record id="appointment_aftercare_email" model="mail.template">
+            <field name="name">Aftercare</field>
+            <field name="model_id" ref="acs_hms.model_hms_appointment"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="description">Aftercare</field>
+            <field name="email_from">{{ (object.nurse_id.email or user.email_formatted) }}</field>
+            <field name="email_to">{{ object.patient_id.email }}</field>
+            <field name="subject">Aftercare</field>
+            <field name="lang">{{ object.patient_id.lang }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <t t-out="object.patient_id.name"></t>,</p>
+                    <p>Thank you for choosing <strong><t t-out="object.department_id.name"></t></strong> for your recent cosmetic treatment.</p>
+                    <p>Your treatment included:</p>
+                    <t t-if="len(ctx.get('medicine_line_ids')) > 0">
+                        <table class="table table-sm o_main_table mt16 acs_table">
+                        <thead>
+                            <tr>
+                                <th>Medicine</th>
+<!--                                <th>Treatment Notes</th>-->
+<!--                                <th>Amount</th>-->
+                                <th>Batch Number</th>
+<!--                                <th>Technique</th>-->
+<!--                                <th>Depth</th>-->
+<!--                                <th>Method</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="ctx.get('medicine_line_ids')" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-out="line.get('product_name') or ''"/>
+                                    </td>
+<!--                                    <td>-->
+<!--                                        <span t-out="line.get('template') or ''"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-out="line.get('medicine_area') or ''"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-out="line.get('amount') or ''"/>-->
+<!--                                    </td>-->
+                                     <td>
+                                        <span t-out="line.get('batch_number') or ''"/>
+                                    </td>
+<!--                                    <td>-->
+<!--                                        <span t-out="line.get('medicine_technique') or ''"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-out="line.get('medicine_depth') or ''"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-out="line.get('medicine_method') or ''"/>-->
+<!--                                    </td>-->
+                                </tr>
+                            </t>
+
+                    </tbody>
+                    </table>
+                    </t>
+
+                    <style>
+                        table.table.table-sm.o_main_table.mt16.acs_table th, td, tbody { border: 1px solid black !important; }
+                    </style>
+                    <p>
+                        We hope you had a pleasant experience. Please find attached important post-treatment instructions to ensure optimal results.
+                        Should you have any questions or concerns, feel free to reach out to us at <strong><t t-out="object.department_id.name"></t></strong>.
+                    </p>
+                    <div>
+                        <p>Our Contact Details are:</p>
+                        <p>Address: <t t-out="object.company_id.partner_id.street"/>,  <t t-out="object.company_id.partner_id.street2"/>,  <t t-out="object.company_id.partner_id.city"/>,  <t t-out="object.company_id.partner_id.state_id.name"/>,  <t t-out="object.company_id.partner_id.zip"/>,  <t t-out="object.company_id.partner_id.country_id.name"/></p>
+                        <p>Phone:  <t t-out="object.company_id.partner_id.phone"/></p>
+                        <p>Nurse Name: <t t-out="object.nurse_id.name"/></p>
+                    </div>
+                    <br/>
+                    <p>We look forward to assisting you in your aesthetic journey.</p>
+                    <br/>
+                    <p>Kind regards,</p>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_purchasequotation_document_inherit" inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//p[@t-field='o.notes']" position="after">
+            <t t-call="brighter_auto_picking.report_purchaseorder_delivery_note"/>
+        </xpath>
+        <xpath expr="//table//span[@t-field='order_line.date_planned']" position="replace">
+            <span t-field="order_line.date_planned" t-options='{"widget": "date"}'/>
+        </xpath>
+        <xpath expr="//t[@t-set='address']" position="replace">
+        </xpath>
+    </template>
+    <template id="report_purchaseorder_document_inherit" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//t[@t-set='address']" position="replace">
+        </xpath>
+        <xpath expr="//p[@t-field='o.date_approve']" position="replace">
+            <p t-field="o.date_approve" t-options='{"widget": "date"}'/>
+        </xpath>
+        <xpath expr="//p[@t-field='o.date_order']" position="replace">
+            <p t-field="o.date_order" t-options='{"widget": "date"}'/>
+        </xpath>
+        <xpath expr="//tbody//span[@t-field='line.date_planned']" position="replace">
+            <span t-field="line.date_planned" t-options='{"widget": "date"}'/>
+        </xpath>
+        <xpath expr="//p[@t-field='o.notes']" position="after">
+            <t t-call="brighter_auto_picking.report_purchaseorder_delivery_note"/>
+        </xpath>
+    </template>
+    <template id="report_purchaseorder_delivery_note">
+        <p style="page-break-after:always;">   </p>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center">Delivery Detail</h2>
+            </div>
+        </div>
+        <t t-set="delivery_partner_ids" t-value="o.delivery_sale_line_ids.mapped('order_partner_id')"/>
+        <t t-if="delivery_partner_ids">
+            <t t-foreach="delivery_partner_ids" t-as="partner">
+                <t t-set="delivery_sale_line_ids" t-value="o.delivery_sale_line_ids.filtered(lambda l: l.order_partner_id.id == partner.id)"/>
+                <t t-if="delivery_sale_line_ids">
+                    <t t-set="length_row" t-value="delivery_sale_line_ids"/>
+                    <table class="table table-sm mt-4">
+                        <thead style="display: table-row-group">
+                            <tr>
+                                <th style="width:30% !important" name="th_address"><strong>Delivery Address</strong></th>
+                                <th style="width:45% !important" name="th_description"><strong>Description</strong></th>
+                                <th name="th_quantity" class="text-end"><strong>Qty</strong></th>
+                                <th name="th_so" class="text-end"><strong>Originating SO</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="line_count" t-value="0"/>
+                            <t t-foreach="delivery_sale_line_ids" t-as="order_line">
+                                <tr t-att-class="'bg-200 fw-bold o_line_section' if order_line.display_type == 'line_section' else 'fst-italic o_line_note' if order_line.display_type == 'line_note' else ''">
+                                    <t t-if="not order_line.display_type">
+                                        <t t-if="line_count == 0">
+                                            <td t-att-rowspan="len(delivery_sale_line_ids)" class="text-start">
+                                            <span t-esc="partner"
+                                                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' 
+                                                name="partner_delivery_detail"/>
+                                            </td>
+                                        </t>
+                                        <td id="product">
+                                            <span t-field="order_line.name"/>
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-field="order_line.product_uom_qty"/>
+                                            <span t-field="order_line.product_uom" groups="uom.group_uom"/>
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-field="order_line.order_id.name"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <t t-set="line_count" t-value="line_count + 1"/>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>  
+            </t>  
+        </t>
+    </template>
+</odoo>

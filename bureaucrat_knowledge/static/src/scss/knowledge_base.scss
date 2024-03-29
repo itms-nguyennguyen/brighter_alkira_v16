@@ -1,0 +1,29 @@
+.knowledge-document-img {
+    max-width: 100%;
+    display: block;
+    padding: 4px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-bureaucrat-knowledge-category .title-name-and-code .field-right-border {
+    border-right: 1px;
+    border-color: #ddd;
+    border-right-style: solid;
+    padding-right: 4px;
+    margin-right: 4px;
+}
+.o_kanban_dashboard.knowledge-dashboard {
+    .o_kanban_record {
+        width: auto !important;
+        .o-dropdown {
+            visibility: hidden !important;
+        }
+    }
+    .o_kanban_record:hover {
+        .o-dropdown {
+            visibility: visible !important;
+        }
+    }
+}

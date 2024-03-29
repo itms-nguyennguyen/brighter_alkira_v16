@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="view_hms_adverse_event_popup_form" model="ir.ui.view">
+        <field name="name">hms.adverse.event.popup.form</field>
+        <field name="model">hms.adverse.event</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="patient_id" string="Patient" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="chemical_burns_event_boolean" string="Chemical Burns" widget="boolean_toggle" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="medication_error_event_boolean" string="Medication Errors" widget="boolean_toggle" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="blindness_event_boolean" string="Blindness" widget="boolean_toggle" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="infections_event_boolean" string="Infections" widget="boolean_toggle" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="allergic_event_boolean" string="Allergic Reactions" widget="boolean_toggle" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="branch_id" string="Clinic" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="nurse_id" string="Clinician" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="nurse_phone" string="Contact" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="content" string="Message" widget="text" attrs="{'readonly': [('is_sent', '=', True)]}"/>
+                        <field name="is_sent" string="Sent" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="send_sms" string="Send" type="object" class="btn btn-primary" />
+                    <button special="cancel" string="Cancel" type="object" class="btn btn-link" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_hms_adverse_event_popup" model="ir.actions.act_window">
+        <field name="name">Adverse Event Notification</field>
+        <field name="res_model">hms.adverse.event</field>
+        <field name="view_id" ref="itms_hms.view_hms_adverse_event_popup_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <!-- END POPUP -->
+    <record id="view_adverse_event_tree" model="ir.ui.view">
+        <field name="name">hms.adverse.event.tree</field>
+        <field name="model">hms.adverse.event</field>
+        <field name="arch" type="xml">
+             <tree string="Adverse Event">
+                <field name="patient_id" string="Patient" readonly="1" />
+                <field name="chemical_burns_event_boolean" string="Chemical Burns" widget="boolean_toggle" optional="show" readonly="1"/>
+                <field name="medication_error_event_boolean" string="Medication Errors" widget="boolean_toggle" optional="show" readonly="1"/>
+                <field name="blindness_event_boolean" string="Blindness" widget="boolean_toggle" optional="show" readonly="1"/>
+                <field name="infections_event_boolean" string="Infections" widget="boolean_toggle" optional="show" readonly="1"/>
+                <field name="allergic_event_boolean" string="Allergic Reactions" widget="boolean_toggle" optional="show" readonly="1"/>
+                <field name="branch_id" string="Clinic" readonly="1" />
+                <field name="nurse_id" string="Clinician" readonly="1" />
+                <field name="nurse_phone" string="Contact" readonly="1" />
+                <field name="create_uid" readonly="1" />
+                <field name="create_date" readonly="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_adverse_event_filter" model="ir.ui.view">
+        <field name="name">hms.adverse.event.filter</field>
+        <field name="model">hms.adverse.event</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <search string="Adverse Event">
+                <field name="patient_id" />
+                <field name="branch_id" />
+                <field name="nurse_id" />
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Clinician" name="nurse_group" domain="[]" context="{'group_by':'nurse_id'}"/>
+                    <filter string="Clinic" name="branch_group" domain="[]" context="{'group_by':'branch_id'}"/>
+                    <filter string="Patient" name="patient_group" domain="[]" context="{'group_by':'patient_id'}"/>
+                    <separator/>
+                    <filter string="Month" name="month_date" context="{'group_by':'create_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_adverse_event" model="ir.actions.act_window">
+        <field name="name">Adverse Event</field>
+        <field name="res_model">hms.adverse.event</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="itms_hms.view_adverse_event_filter"/>
+        <field name="domain">[('is_sent','=',True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Adverse Event -->
+    <!-- <menuitem id="menu_adverse_event" name="Adverse Event" sequence="300" action="action_adverse_event" groups="acs_hms_base.group_hms_manager" web_icon="acs_hms_base,static/description/icon.png"/> -->
+
+</odoo>

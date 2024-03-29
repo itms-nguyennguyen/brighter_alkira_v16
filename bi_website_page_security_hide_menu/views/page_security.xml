@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_form_inherit_website_for_access" model="ir.ui.view">
+            <field name="name">form.website.inherit.access</field>
+            <field name="model">website.page</field>
+            <field name="inherit_id" ref="website.website_pages_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='is_published']" position="after">
+                    <field name="is_login_necessary"/>
+                </xpath>
+
+                <xpath expr="//field[@name='menu_ids']" position="after">
+                    <notebook>
+                        <page string="Hide From Users">
+                            <field name="hide_user"/>
+                        </page>
+
+                        <page string="Hide From Groups">
+                            <field name="hide_groups"/>
+                        </page>
+
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="website_page_form_view_inherit" model="ir.ui.view">
+            <field name="name">form.website.inherit.form</field>
+            <field name="model">website.page</field>
+            <field name="inherit_id" ref="website.website_pages_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="js_class"></attribute>
+                    <attribute name="type"></attribute>
+                    <attribute name="action"></attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="website.action_website_pages_list" model="ir.actions.act_window">
+            <field name="name">Website Pages</field>
+            <field name="view_mode">tree,kanban,form</field>
+        </record>
+    </data>
+</odoo>

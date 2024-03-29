@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_hms_patient_medication_tree" model="ir.ui.view">
+        <field name="name">hms.patient.medication.tree</field>
+        <field name="model">hms.patient.medication</field>
+        <field name="arch" type="xml">
+            <tree string="Patient Medication">
+                <field name="patient_id"/>
+                <field name="physician_id"/>
+                <field name="adverse_reaction"/>
+                <field name="notes"/>
+                <field name="is_active"/>
+                <field name="course_completed"/>
+                <field name="product_id"/>
+                <field name="discontinued_reason"/>
+                <field name="discontinued"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hms_patient_medication_form" model="ir.ui.view">
+        <field name="name">hms.patient.medication.form</field>
+        <field name="model">hms.patient.medication</field>
+        <field name="arch" type="xml">
+            <form string="ACS Patient Medication">
+                <field name="patient_id"/>
+                <field name="physician_id"/>
+                <field name="adverse_reaction"/>
+                <field name="notes"/>
+                <field name="is_active"/>
+                <field name="course_completed"/>
+                <field name="product_id"/>
+                <field name="discontinued_reason"/>
+                <field name="discontinued"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hms_patient_medication_search" model="ir.ui.view">
+        <field name="name">hms.patient.medication.search</field>
+        <field name="model">hms.patient.medication</field>
+        <field name="arch" type="xml">
+            <search string="ACS Patient Medication">
+                <field name="patient_id"/>
+                <field name="physician_id"/>
+                <field name="adverse_reaction"/>
+                <field name="notes"/>
+                <field name="is_active"/>
+                <field name="course_completed"/>
+                <field name="product_id"/>
+                <field name="discontinued_reason"/>
+                <field name="discontinued"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter string="Patient" name="patient_id_groupby" domain="[]" context="{'group_by':'patient_id'}"/>
+                    <filter string="Physician" name="doctor_groupby" domain="[]" context="{'group_by':'physician_id'}"/>
+                    <filter string="Adverse Reactions" name="adverse_reaction_groupby" domain="[]" context="{'group_by':'adverse_reaction'}"/>
+                    <filter string="Extra Info" name="notes_groupby" domain="[]" context="{'group_by':'notes'}"/>
+                    <filter string="Active" name="is_active_groupby" domain="[]" context="{'group_by':'is_active'}"/>
+                    <filter string="Course Completed" name="course_completed_groupby" domain="[]" context="{'group_by':'course_completed'}"/>
+                    <filter string="Medication Product" name="product_id_groupby" domain="[]" context="{'group_by':'product_id'}"/>
+                    <filter string="Reason for discontinuation" name="discontinued_reason_groupby" domain="[]" context="{'group_by':'discontinued_reason'}"/>
+                    <filter string="Discontinued" name="discontinued_groupby" domain="[]" context="{'group_by':'discontinued'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_hms_patient_medication_view">
+        <field name="name">Patient Medication</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hms.patient.medication</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_hms_patient_medication_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+
+
+
+    <record id="view_medicine_area_tree" model="ir.ui.view">
+        <field name="name">medicine.area.tree</field>
+        <field name="model">medicine.area</field>
+        <field name="arch" type="xml">
+            <tree string="Area" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+     <record model="ir.actions.act_window" id="act_open_medicine_area_view">
+        <field name="name">Area</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.area</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="view_medicine_technique_tree" model="ir.ui.view">
+        <field name="name">medicine.technique.tree</field>
+        <field name="model">medicine.technique</field>
+        <field name="arch" type="xml">
+            <tree string="Technique" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+     <record model="ir.actions.act_window" id="act_open_medicine_technique_view">
+        <field name="name">Technique</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.technique</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+      <record id="view_medicine_depth_tree" model="ir.ui.view">
+        <field name="name">medicine.depth.tree</field>
+        <field name="model">medicine.depth</field>
+        <field name="arch" type="xml">
+            <tree string="Depth" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+     <record model="ir.actions.act_window" id="act_open_medicine_depth_view">
+        <field name="name">Depth</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.depth</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+     <record id="view_medicine_method_tree" model="ir.ui.view">
+        <field name="name">medicine.method.tree</field>
+        <field name="model">medicine.method</field>
+        <field name="arch" type="xml">
+            <tree string="Method" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+     <record model="ir.actions.act_window" id="act_open_medicine_method_view">
+        <field name="name">Method</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.method</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+
+    <record id="view_medicine_amount_tree" model="ir.ui.view">
+        <field name="name">medicine.amount.tree</field>
+        <field name="model">medicine.amount</field>
+        <field name="arch" type="xml">
+            <tree string="Amount" editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+     <record model="ir.actions.act_window" id="act_open_medicine_amount_view">
+        <field name="name">Amount</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.amount</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

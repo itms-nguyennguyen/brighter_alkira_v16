@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="my_wizard_form" model="ir.ui.view">
+        <field name="name">my.wizard.form</field>
+        <field name="model">my.wizard</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="multi_step_wizard.multi_step_wizard_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//footer" position="before">
+            <!-- <h1>
+                <field name="name"
+                        attrs="{'readonly': [('state', '!=', 'start')]}"
+                        class="oe_inline"
+                        placeholder="Name"/>
+            </h1> -->
+            <group name="start" attrs="{'invisible': [('state', '!=', 'start')]}">
+                <group>
+                    <field name="patient_id"/>
+                    <field name="nurse_id"/>
+                </group>
+            </group>
+            <group name="date" attrs="{'invisible': [('state', '!=', 'date')]}">
+                <group>
+                    <field name="date"/>
+                </group>
+            </group>
+            <group name="prescription" attrs="{'invisible': [('state', '!=', 'prescription')]}">
+                <group>
+                    <field 
+                        name="prescription_ids" widget="many2many_tags"
+                        domain="[('patient_id', '=', patient_id)]"/>
+                </group>
+            </group>
+            <group name="type" attrs="{'invisible': [('state', '!=', 'final')]}">
+                <group>
+                    <field name="consultation_type"/>
+                </group>
+            </group>
+        </xpath>
+        <xpath expr="//footer//button" position="before">
+            <button
+                name="button_done"
+                string="Done"
+                type="object"
+                class="btn-primary"
+                attrs="{'invisible': [('state', '!=', 'final')]}"
+            />
+        </xpath>
+        </field>
+    </record>
+    <!-- <record id="open_my_wizard" model="ir.actions.act_window">
+        <field name="name">My Wizard</field>
+        <field name="res_model">my.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="project.model_project_project" />
+        <field name="binding_view_types">form</field>
+    </record> -->
+</odoo>

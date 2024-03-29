@@ -1,0 +1,179 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hms_hms_appointment_purpose_user,Appointment Purpose,model_appointment_purpose,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_hms_patient_disease_user,Systematic Examination,model_hms_patient_disease,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_hms_appointment_user,Appointment,model_hms_appointment,acs_hms_base.group_hms_user,1,0,1,0
+access_hms_hms_diseases_user,ACS Diseases,model_hms_diseases,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_diseases_category_user,ACS Diseases Category,model_diseases_category,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_disease_gene_user,ACS Disease Gene,model_disease_gene,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_hms_patient_genetic_risk_user,ACS Patient Genetic Risk,model_hms_patient_genetic_risk,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_hms_patient_family_diseases_user,ACS Patient Family Diseases,model_hms_patient_family_diseases,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_medicament_dosage_user,ACS Medication Dosage,model_medicament_dosage,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_acs_family_member_user,ACS Family Member,model_acs_family_member,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_hms_prescription_line_user,Prescription Line,model_prescription_line,acs_hms_base.group_hms_user,1,1,1,1
+access_hms_hms_prescription_order_user,Prescription Order,model_prescription_order,acs_hms_base.group_hms_user,1,1,1,1
+access_hms_hms_patient_medication_user,ACS Patient Medication,model_hms_patient_medication,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_acs_ethnicity_user,ACS Ethnicity,model_acs_ethnicity,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_medicament_group_line_user,Medicament Group Line ,model_medicament_group_line,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_medicament_group_user,ACS Medicament Group,model_medicament_group,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_treatment_user,ACS Treatment,acs_hms.model_hms_treatment,acs_hms_base.group_hms_user,1,0,0,0
+access_medical_alert_user,ACS Medical Alerts,model_acs_medical_alert,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_appointment_cabin_user,App Cabin User,model_appointment_cabin,acs_hms_base.group_hms_user,1,0,0,0
+access_acs_family_relation_user,Family Relation,model_acs_family_relation,acs_hms_base.group_hms_user,1,0,0,0
+access_acs_cancel_reason_user,access_acs_cancel_reason_user,model_acs_cancel_reason,acs_hms_base.group_hms_user,1,0,0,0
+access_acs_patient_evaluation_user,access_acs_patient_evaluation,model_acs_patient_evaluation,acs_hms_base.group_hms_user,1,0,0,0
+access_acs_patient_procedure_user,access_acs_patient_procedure,model_acs_patient_procedure,acs_hms_base.group_hms_user,1,0,0,0
+access_acs_product_kit_user,acs.product.kit,model_acs_product_kit,acs_hms_base.group_hms_user,1,0,0,0
+access_acs_product_kit_line_user,acs.product.kit.line,model_acs_product_kit_line,acs_hms_base.group_hms_user,1,0,0,0
+acs_hms.access_procedure_group_line,access_procedure_group_line,model_procedure_group_line,acs_hms_base.group_hms_user,1,0,0,0
+acs_hms.access_procedure_group,access_procedure_group,model_procedure_group,acs_hms_base.group_hms_user,1,0,0,0
+
+access_hms_patient_receptionist,Patient,acs_hms_base.model_hms_patient,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_patient_doctor,Patient Doctor,acs_hms_base.model_hms_patient,acs_hms.group_hms_doctor,1,1,1,1
+access_hms_patient_doctor_clinic,Patient Doctor Clinic,acs_hms_base.model_hms_patient,acs_hms.group_hms_doctor_clinic,1,1,1,1
+
+
+access_hms_hms_appointment_receptionist,Appointment,model_hms_appointment,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_patient_disease_receptionist,ACS Patient Disease,model_hms_patient_disease,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_disease_gene_receptionist,ACS Disease Gene,model_disease_gene,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_patient_genetic_risk_receptionist,ACS Patient Genetic Risk,model_hms_patient_genetic_risk,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_patient_family_diseases_receptionist,ACS Patient Family Diseases,model_hms_patient_family_diseases,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_acs_family_member_receptionist,ACS Family Member,model_acs_family_member,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_app_consumable_rec,Consumable Line Rec,acs_hms_base.model_hms_consumable_line,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_acs_ethnicity_receptionist,ACS Ethnicity,model_acs_ethnicity,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_res_partner_receptionist,Partner Receptionist,base.model_res_partner,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_treatment_receptionist,ACS Treatment,acs_hms.model_hms_treatment,acs_hms_base.group_hms_manager,1,1,1,0
+
+access_hms_treatment_doctor,ACS Treatment Doctor,acs_hms.model_hms_treatment,acs_hms.group_hms_doctor,1,1,1,1
+access_hms_treatment_doctor_clinic,ACS Treatment DC,acs_hms.model_hms_treatment,acs_hms.group_hms_doctor_clinic,1,1,1,1
+
+access_medical_alert_rec,ACS Medical Alerts Rec,model_acs_medical_alert,acs_hms_base.group_hms_manager,1,1,1,1
+access_acs_cancel_reason_receptionist,access_acs_cancel_reason_receptionist,model_acs_cancel_reason,acs_hms_base.group_hms_manager,1,1,1,0
+access_acs_cancel_reason_wiz_receptionist,access_acs_cancel_reason_wiz_receptionist,model_acs_cancel_reason_wiz,acs_hms_base.group_hms_manager,1,1,1,1
+acs_hms.access_acs_reschedule_appointments,access_acs_reschedule_appointments,acs_hms.model_acs_reschedule_appointments,acs_hms_base.group_hms_manager,1,1,1,1
+access_acs_patient_evaluation_receptionist,access_acs_patient_evaluation,model_acs_patient_evaluation,acs_hms_base.group_hms_manager,1,1,1,1
+access_acs_patient_procedure_receptionist,access_acs_patient_procedure,model_acs_patient_procedure,acs_hms_base.group_hms_manager,1,1,1,1
+
+access_hms_medicament_flavour_nurse,ACS Medicament Flavour,acs_hms_base.model_medicament_flavour,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_diseases_nurse,ACS Diseases,model_hms_diseases,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_diseases_category_nurse,ACS Diseases Category,model_diseases_category,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_patient_disease_nurse,ACS Patient Disease,model_hms_patient_disease,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_disease_gene_nurse,ACS Disease Gene,model_disease_gene,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_patient_genetic_risk_nurse,ACS Patient Genetic Risk,model_hms_patient_genetic_risk,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_patient_family_diseases_nurse,ACS Patient Family Diseases,model_hms_patient_family_diseases,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_app_consumable_nurse,Consumable Line Nurse,acs_hms_base.model_hms_consumable_line,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_drug_form_nurse,ACS Drug Form,acs_hms_base.model_drug_form,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_active_comp_nurse,ACS Active Comp,acs_hms_base.model_active_comp,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_drug_company_nurse,ACS Drug Company,acs_hms_base.model_drug_company,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_drug_route_nurse,ACS Drug Route,acs_hms_base.model_drug_route,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_medicament_dosage_nurse,ACS Medication Dosage,model_medicament_dosage,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_prescription_line_nurse,Prescription Line,model_prescription_line,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_prescription_order_nurse,Prescription Order,model_prescription_order,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_patient_medication_nurse,ACS Patient Medication,model_hms_patient_medication,acs_hms_base.group_hms_manager,1,1,0,0
+access_hms_acs_ethnicity_nurse,ACS Ethnicity,model_acs_ethnicity,acs_hms_base.group_hms_manager,1,1,0,0
+access_hms_medicament_group_line_nurse,Medicament Group Line ,model_medicament_group_line,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_medicament_group_nurse,ACS Medicament Group,model_medicament_group,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_patient_nurse,ACS Patient Nurse,acs_hms_base.model_hms_patient,acs_hms_base.group_hms_manager,1,1,1,0
+access_medical_alert_nurse,ACS Medical Alerts Nurse,model_acs_medical_alert,acs_hms_base.group_hms_manager,1,1,1,1
+access_acs_patient_evaluation_nurse,access_acs_patient_evaluation_nurse,model_acs_patient_evaluation,acs_hms_base.group_hms_manager,1,1,1,0
+access_acs_product_kit_nurse,acs.product.kit,model_acs_product_kit,acs_hms_base.group_hms_manager,1,1,1,1
+access_acs_product_kit_line_nurse,acs.product.kit.line,model_acs_product_kit_line,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_app_consumable_jr_dr,Consumable Line Dr,acs_hms_base.model_hms_consumable_line,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_acs_family_member_jr_doctor,ACS Family Member,model_acs_family_member,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_hms_prescription_line_jr_doctor,Prescription Line,model_prescription_line,acs_hms.group_hms_doctor,1,1,1,1
+access_hms_hms_prescription_order_jr_doctor,Prescription Order,model_prescription_order,acs_hms.group_hms_doctor,1,1,1,1
+access_hms_hms_prescription_line_jr_doctor_clinic,Prescription Line Clinic,model_prescription_line,acs_hms.group_hms_doctor_clinic,1,1,1,1
+access_hms_hms_prescription_order_jr_doctor_clinic,Prescription Order Clinic,model_prescription_order,acs_hms.group_hms_doctor_clinic,1,1,1,1
+access_hms_hms_patient_medication_jr_doctor,ACS Patient Medication,model_hms_patient_medication,acs_hms_base.group_hms_manager,1,1,1,0
+acs_hms.access_procedure_group_line_dr,access_procedure_group_line_dr,model_procedure_group_line,acs_hms_base.group_hms_manager,1,1,1,1
+acs_hms.access_procedure_group_dr,access_procedure_group_dr,model_procedure_group,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_medicament_group_line_doctor,Medicament Group Line ,model_medicament_group_line,acs_hms.group_hms_doctor,1,1,1,1
+access_hms_medicament_group_doctor,ACS Medicament Group,model_medicament_group,acs_hms.group_hms_doctor,1,1,1,1
+access_hms_medicament_group_line_doctor_clinic,Medicament Group Line Clinic ,model_medicament_group_line,acs_hms.group_hms_doctor_clinic,1,1,1,1
+access_hms_medicament_group_doctor_clinic,ACS Medicament Group Clinic,model_medicament_group,acs_hms.group_hms_doctor_clinic,1,1,1,1
+access_hms_hms_appointment_manager,Appointment,model_hms_appointment,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_diseases_manager,ACS Diseases,model_hms_diseases,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_diseases_category_manager,ACS Diseases Category,model_diseases_category,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_patient_disease_manager,ACS Patient Disease,model_hms_patient_disease,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_disease_gene_manager,ACS Disease Gene,model_disease_gene,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_patient_genetic_risk_manager,ACS Patient Genetic Risk,model_hms_patient_genetic_risk,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_patient_family_diseases_manager,ACS Patient Family Diseases,model_hms_patient_family_diseases,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_drug_route_manager,ACS Drug Route,acs_hms_base.model_drug_route,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_medicament_dosage_manager,ACS Medication Dosage,model_medicament_dosage,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_acs_family_member_manager,ACS Family Member,model_acs_family_member,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_prescription_line_manager,Prescription Line,model_prescription_line,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_prescription_order_manager,Prescription Order,model_prescription_order,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_patient_medication_manager,ACS Patient Medication,model_hms_patient_medication,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_acs_ethnicity_manager,ACS Ethnicity,model_acs_ethnicity,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_res_partner_manager,Partner Manager,base.model_res_partner,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_treatment_manager,ACS Treatment,acs_hms.model_hms_treatment,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_hms_appointment_purpose_manager,Appointment Purpose,model_appointment_purpose,acs_hms_base.group_hms_user,1,1,1,1
+access_hms_appointment_cabin_manager,App Cabin Manager,model_appointment_cabin,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_acs_physician_hms_manager,Physician,acs_hms_base.model_hms_physician,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_user_stock_move,StockMove,stock.model_stock_move,acs_hms_base.group_hms_user,1,0,0,0
+access_hms_acs_physician_erp_manager,physician,acs_hms_base.model_hms_physician,base.group_erp_manager,1,1,1,1
+access_acs_family_relation_manager,Family Relation,model_acs_family_relation,acs_hms_base.group_hms_user,1,1,1,1
+access_hms_group_acs_hms_appointment_user,Appointment User,model_hms_appointment,acs_hms_base.group_hms_user,1,1,1,0
+access_acs_cancel_reason_manager,access_acs_cancel_reason_manager,model_acs_cancel_reason,acs_hms_base.group_hms_manager,1,1,1,1
+acs_hms.access_acs_pain_level,access_acs_pain_level,acs_hms.model_acs_pain_level,base.group_user,1,1,1,1
+access_hms_advice_template,advice_template_nurse,model_advice_template,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_advice_template,advice_template_doctor,model_advice_template,acs_hms.group_hms_doctor,1,1,1,0
+access_hms_advice_template_doctor_clinic,advice_template_doctor_clinic,model_advice_template,acs_hms.group_hms_doctor_clinic,1,1,1,0
+access_hms_advice_template,advice_template_user,model_advice_template,acs_hms_base.group_hms_user,1,1,1,0
+access_hms_advice_template,advice_template_manager,model_advice_template,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_treatment_template,treatment_template_nurse,model_treatment_template,acs_hms_base.group_hms_manager,1,1,1,0
+access_hms_treatment_template,treatment_template_doctor,model_treatment_template,acs_hms.group_hms_doctor,1,1,1,0
+access_hms_treatment_template,treatment_template_user,model_treatment_template,acs_hms_base.group_hms_user,1,1,1,1
+access_hms_treatment_template,treatment_template_manager,model_treatment_template,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_prescription_detail,prescription_detail_nurse,model_prescription_detail,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_prescription_detail_doctor,prescription_detail_doctor,model_prescription_detail,acs_hms.group_hms_doctor,1,1,1,1
+access_hms_prescription_detail_doctor_clinic,prescription_detail_doctor_clinic,model_prescription_detail,acs_hms.group_hms_doctor_clinic,1,1,1,1
+access_hms_prescription_detail,prescription_detail_jr_doctor,model_prescription_detail,acs_hms_base.group_hms_manager,1,1,1,1
+access_hms_prescription_detail,prescription_detail_user,model_prescription_detail,acs_hms_base.group_hms_user,1,1,1,1
+access_hms_prescription_detail,prescription_detail_manager,model_prescription_detail,acs_hms_base.group_hms_manager,1,1,1,1
+access_appointment_detail,Appointment,model_appointment_prescription_line,base.group_user,1,1,1,1
+access_hms_wizard,prescription__add_pic,model_hms_picture_before_wizard,base.group_user,1,1,1,1
+access_treatment_medicine_line,treatment.medicine.line.user,acs_hms.model_treatment_medicine_line,base.group_user,1,1,1,1
+access_treatment_medicine_line_doctor,treatment.medicine.line.doctor,acs_hms.model_treatment_medicine_line,acs_hms.group_hms_doctor_clinic,1,1,1,1
+access_treatment_medicine_line_doctor_clinic,treatment.medicine.line.doctor.clinic,acs_hms.model_treatment_medicine_line,acs_hms.group_hms_doctor_clinic,1,1,1,1
+access_appointment_individual_survey_answer,appointment.individual.survey.answer,model_appointment_individual_survey_answer,base.group_user,1,1,1,1
+access_appointment_relevant_survey_answer,appointment.relevant.survey.answer,model_appointment_relevant_survey_answer,base.group_user,1,1,1,1
+access_appointment_medication_survey_answer,appointment.medication.survey.answer,model_appointment_medication_survey_answer,base.group_user,1,1,1,1
+access_appointment_addition_survey_answer,appointment.addition.survey.answer,model_appointment_addition_survey_answer,base.group_user,1,1,1,1
+access_schedule_consent_wiz,access_schedule_consent_wiz,acs_hms.model_schedule_consent_wiz,base.group_user,1,1,1,1
+access_multiple_consent_wiz,access_multiple_consent_wiz,acs_hms.model_multiple_consent,base.group_user,1,1,1,1
+access_multiple_aftercare_wiz,access_multiple_aftercare_wiz,acs_hms.model_multiple_aftercare,base.group_user,1,1,1,1
+access_pay_prescriber_wiz_user,access.pay.prescriber.wiz.user,acs_hms.model_pay_prescriber_wiz,base.group_user,1,1,1,1
+access_account_payment_method_line_user,account.payment.method.line.user,account.model_account_payment_method_line,base.group_user,1,1,1,1
+access_payment_token_user,payment.token.user,payment.model_payment_token,base.group_user,1,1,1,1
+access_payment_transaction_user,payment.transaction.user,payment.model_payment_transaction,base.group_user,1,1,1,1
+access_payment_provider_user,access.payment.provider.user,payment.model_payment_provider,base.group_user,1,1,1,1
+access_pay_prescriber_wiz_hms_user,access.pay.prescriber.wiz.hms.user,acs_hms.model_pay_prescriber_wiz,acs_hms_base.group_hms_user,1,1,1,1
+access_account_payment_method_line_hms_user,account.payment.method.line.hms.user,account.model_account_payment_method_line,acs_hms_base.group_hms_user,1,1,1,1
+access_payment_token_hms_user,payment.token.hms.user,payment.model_payment_token,acs_hms_base.group_hms_user,1,1,1,1
+access_payment_transaction_hms_user,payment.transaction.hms.user,payment.model_payment_transaction,acs_hms_base.group_hms_user,1,1,1,1
+access_payment_provider_hms_user,access.payment.provider.hms.user,payment.model_payment_provider,acs_hms_base.group_hms_user,1,1,1,1
+
+access_res_users_user,access_res_users_user,base.model_res_users,acs_hms_base.group_hms_user,1,1,1,0
+
+access_acs_treatment_photos_user,acs.treatment.photos,model_treatment_photos,acs_hms_base.group_hms_user,1,1,1,1
+access_acs_treatment_photos_template_user,acs.treatment.photos.template,model_treatment_photos_template,acs_hms_base.group_hms_user,1,1,1,1
+
+hr.access_hr_employee_user,hr.employee user,hr.model_hr_employee,hr.group_hr_user,1,0,0,0
+access_hr_employee_manager,hr.employee manager,hr.model_hr_employee,hr.group_hr_manager,1,1,1,1
+event.access_event_event_user,event.event.user,event.model_event_event,event.group_event_user,1,0,0,0
+access_attachment_attachment_manager,attachment_attachment_manager,acs_hms.model_attachment_attachment,base.group_user,1,1,1,1
+
+access_medical_checklist_user,medical.checklist user,acs_hms.model_medical_checklist,base.group_user,1,1,1,1
+access_medical_checklist_line_user,medical.checklist.line user,acs_hms.model_medical_checklist_line,base.group_user,1,1,1,1
+access_patient_medical_checklist_line_user,patient.medical.checklist.line user,acs_hms.model_patient_medical_checklist_line,base.group_user,1,1,1,1
+
+access_patient_document_user,patient.document user,acs_hms.model_patient_document,base.group_user,1,1,1,1
+
+access_medicine_area_user,medicine.area.user,acs_hms.model_medicine_area,base.group_user,1,1,1,1
+access_medicine_technique_user,medicine.technique.user,acs_hms.model_medicine_technique,base.group_user,1,1,1,1
+access_medicine_depth_user,medicine.depth.user,acs_hms.model_medicine_depth,base.group_user,1,1,1,1
+access_medicine_method_user,medicine.method.user,acs_hms.model_medicine_method,base.group_user,1,1,1,1
+
+access_medicine_amount_user,medicine.amount.user,acs_hms.model_medicine_amount,base.group_user,1,1,1,1
+
+
